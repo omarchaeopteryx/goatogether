@@ -20,8 +20,4 @@ Please feel free to clone this repository. Web deployment coming soon.
 
 Coming soon. But it's best to use it with friends.
 
-#### Notes
-
-This project was created for Dev Bootcamp San Diego, 2016.
-
 ***
