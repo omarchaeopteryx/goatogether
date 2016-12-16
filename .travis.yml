@@ -11,6 +11,6 @@ script:
   - bundle exec rspec spec/
 
 before_script:
-  - psql -c 'create database client_project_test' -U postgres
+  - psql -c 'create database goatogether_test' -U postgres
 
 bundler_args: --binstubs=./bundler_stubs
