@@ -20,4 +20,8 @@ Please feel free to clone this repository. Web deployment coming soon.
 
 Coming soon. But it's best to use it with friends.
 
+### Build notes
+
+Coming soon.
+
 ***
