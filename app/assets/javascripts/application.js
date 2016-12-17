@@ -16,8 +16,6 @@
 //= require_tree .
 
 function initialize() {
-
-
   var locations = [
   ['San Diego', 32, -117, 4]];
 
@@ -53,64 +51,32 @@ function initialize() {
   });
 }
 
-
-  function addMarker(location) {
-        marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-    }
-
-
-function loadScript() {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' + 'callback=initialize';
-  document.body.appendChild(script);
-}
-
-window.onload = loadScript;
-
-
 $(document).ready(function(){
   $.ajax({
     url: '/',
     method: "GET",
     dataType: "JSON"
-  }).done(function(response){
-    var tweetResponse = response;
-    console.log(tweetResponse);
+    })
+    .done(function(response){
+      var tweetResponse = response;
 
-    // var latitude = tweetResponse[1].place.bounding_box.coordinates[0][1][0];
-    // var longitude = tweetResponse[1].place.bounding_box.coordinates[0][1][1];
-
-  //   for (i = 0; i < locations.length; i++) {
-  //   newMarker = new google.maps.Marker({
-  //     position: new google.maps.LatLng(locations[0][0], locations[0][1]),
-  //     map: map
-  //   });
-  //   newMarker.setMap(map)
-  // }
-
-    console.log(typeof(geoResultLong))
-      function TestMarker(lat, long) {
-       CentralPark = new google.maps.LatLng(lat, long);
-       addMarker(CentralPark);
-    }
+      function addMarker(lat, long) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, long),
+            map: map
+        });
+      }
 
       tweetResponse.forEach(function(element, elementIndex) {
         if(tweetResponse[elementIndex].place !== null){
           var latitude = tweetResponse[elementIndex].place.bounding_box.coordinates[0][1][0];
           var longitude = tweetResponse[elementIndex].place.bounding_box.coordinates[0][1][1];
-          TestMarker(longitude,latitude);
-        }else{
+          addMarker(longitude,latitude);
+        } else {
           console.log('no coordinates for' + element)
         }
       });
-
-
-})
-
+    })
 })
 
 
