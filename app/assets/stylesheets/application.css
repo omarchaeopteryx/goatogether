@@ -76,12 +76,13 @@ nav.menushow .menu-btn {
     margin: 0;
     padding: 0;
     box-shadow:0 0 50px 0 rgba(0,0,0,.5);
-    width: 200px;
+    width: 250px;
 }
 
 .menu-user{
     margin-top: 500px;
 }
+
 
 nav ul {
     margin-top: 50px;
@@ -153,6 +154,30 @@ nav a:hover  {
 .logo a {
     text-decoration: none;
     color: white;
+}
+
+.search {
+    position: absolute;
+    right: 0;
+    z-index: 999;
+    top: 100px;
+}
+
+.search input {
+    border: none;
+    border-radius: 5px;
+    width: 350px;
+    font-size: 16px;
+    padding: 10px;
+    box-shadow:0 0 50px 0 rgba(0,0,0,.5);
+    position: relative;
+    margin: 0 10px;
+    text-indent: 25px;
+}
+.search .fa-search{
+    position: absolute;
+    left: 20px;
+    top: 10px;
 }
 
 article {
