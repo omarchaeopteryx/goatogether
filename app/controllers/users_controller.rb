@@ -1,10 +1,21 @@
 class UsersController <  ApplicationController
   def index
-    @results = current_user.twitter.search("#GoatTogether",:result_type => "recent").take(5).collect
+    @allresults = []
+    @results1 = current_user.twitter.search("#goatogether")
+    @results2 = current_user.twitter.search("#GoatTogether")
+    # @results3 = current_user.twitter.search("@realDonaldTrump")
+    @allresults << @results1
+    @allresults << @results2
+    # @allresults << @results3
+
      respond_to do |format|
       format.html
-      format.json { render json: @results }
+      format.json { render json: @allresults }
     end
+  end
+
+  def new
+    render 'login'
   end
 
   private
