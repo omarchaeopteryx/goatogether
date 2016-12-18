@@ -175,6 +175,3 @@ $(document).ready(function(){
     $("nav").toggleClass("menushow");
   });
 })
-
-
-
