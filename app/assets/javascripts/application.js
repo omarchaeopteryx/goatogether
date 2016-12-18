@@ -138,13 +138,22 @@ $(document).ready(function(){
     })
     .done(function(response){
       var tweetResponse = response;
+
+
+        var icons = {
+          parking: {
+            icon: 'http://pngimg.com/upload/bear_PNG1191.png'
+          }
+        };
+
       function addMarker(lat, long) {
-        marker = new google.maps.Marker({
+          var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, long),
+            icon: icons['parking'].icon,
             map: map
-        });
-        return marker
-      }
+          });
+          return marker
+        }
 
 
       //the tweet response is an array of arrays, each containing tweet object
