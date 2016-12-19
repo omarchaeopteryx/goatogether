@@ -1,5 +1,7 @@
 <div class="begin-form">
-  <form>
+  <h2>Begin</h2>
+  <span class="close">&times;</span>
+  <form method="POST" action="/journeys">
     <label>Name</label>
     <input type="text" name="name" placeholder="Big Sur road trip">
     <label>Hashtag</label>
@@ -7,7 +9,9 @@
     <label>Friends</label>
     <input type="text" name="friends" placeholder="@goatogether, @my_dog">
     <label>Start Date</label>
-    <input type="date" name="date">
+    <input type="date" name="start_date">
+    <label>End Date</label>
+    <input type="date" name="end_date">
     <label>Time</label>
     <input type="time" name="time">
     <input type="submit" value="Let's go!">

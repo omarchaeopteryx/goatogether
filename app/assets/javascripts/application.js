@@ -183,6 +183,11 @@ $(document).ready(function(){
     event.preventDefault();
     $("nav").toggleClass("menushow");
   });
+
+  $("a[href='/journeys/new']").on('click', function(e){
+    e.preventDefault();
+    $('div#overlay').css('display', 'block')
+  })
 })
 
 
