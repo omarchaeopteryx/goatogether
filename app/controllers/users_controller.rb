@@ -1,6 +1,6 @@
 class UsersController <  ApplicationController
 
-  before_action :require_login, except: [:new]
+  before_action :require_login, except: [:new, :create]
 
   def new
     render 'login'
@@ -38,7 +38,7 @@ class UsersController <  ApplicationController
 
     def require_login
       unless logged_in?
-        flash[:error] = "Please sign up and join!"
+        flash[:notice] = "Please sign up to start creating your journeys!"
         redirect_to new_user_path
       end
     end

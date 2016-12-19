@@ -1,6 +1,12 @@
 <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 <script src="https://use.fontawesome.com/f3f0aa6a92.js"></script>
 
+<div class='alerts'>
+  <ul>
+  <li><%= flash[:notice] %></li>
+  </ul>
+</div>
+
 <div id='login-page'>
   <div class="login-interior">
     <h1>Welcome to goatogether!</h1>
