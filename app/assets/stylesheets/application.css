@@ -214,3 +214,30 @@ p {
 .fa {
     margin-right: 10px;
 }
+
+label {
+    display: block;
+    margin-top: 20px;
+}
+
+.begin-form input{
+    border: none;
+    border-bottom: 2px solid #BE6E46;
+    width: 400px;
+    padding: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.begin-form input[type="submit"]{
+    display: block;
+    border: none;
+    color: white;
+    background-color: #59594A;
+    border-radius: 10px;
+    margin-top: 40px;
+    width: 400px;
+    font-size: 18px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
