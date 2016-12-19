@@ -149,7 +149,7 @@ $(document).ready(function(){
       function addMarker(lat, long) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, long),
-            icon: icons['parking'].icon,
+            // icon: icons['parking'].icon,
             map: map
           });
           return marker
