@@ -183,4 +183,13 @@ $(document).ready(function(){
     event.preventDefault();
     $("nav").toggleClass("menushow");
   });
+
+// Begin pop up modal
+  $("a[href='/journeys/new']").on('click', function(e){
+    e.preventDefault();
+    $('div#overlay').css('display', 'block');
+    $('.close').on('click', function(){
+      $('div#overlay').css('display', 'none');
+    })
+  })
 })
