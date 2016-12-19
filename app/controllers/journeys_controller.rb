@@ -1,4 +1,8 @@
 class JourneysController < ApplicationController
+  def index
+    @journeys = Journey.where(user_id: session[:user_id])
+  end
+
   def new
   end
 
@@ -34,5 +38,13 @@ class JourneysController < ApplicationController
 
   def find_journey
     Journey.find_by(id: [params: id])
+  end
+
+  def upcoming_journey
+    Journey.find_by(user_id: session[:user_id])
+  end
+
+  def previous_journey
+
   end
 end
