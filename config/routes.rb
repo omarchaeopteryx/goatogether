@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
-  resource :user
+  resources :users
   resource :post
   get '/inst/tags', to: 'posts#index'
   resources :locations

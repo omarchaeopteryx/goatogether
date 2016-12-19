@@ -1,0 +1,9 @@
+<h2>@<%= current_user.name %>'s Profile</h2>
+
+<section id='user-summary' class='summary'>
+    <ul>
+      <li class='user-name'><%=current_user.provider %> handle: @<%= current_user.name %></li>
+      <li>Member since <%= current_user.created_at %></li>
+    </ul>
+
+</section>
