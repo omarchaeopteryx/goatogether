@@ -2,6 +2,14 @@ class JourneysController < ApplicationController
   def new
   end
 
+  def search
+   search = params[:search]
+   @users = User.where('lower(name) ~* ?', "[#{search.downcase}]")
+   p @users
+   render :_search
+
+  end
+
   def create
     @journey = Journey.new(journey_params)
     @invite = Invite.new(invite_params)
