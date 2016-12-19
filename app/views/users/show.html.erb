@@ -3,7 +3,7 @@
 <section id='user-summary' class='summary'>
     <ul>
       <li class='user-name'><%=current_user.provider %> handle: @<%= current_user.name %></li>
-      <li>Member since <%= current_user.created_at %></li>
+      <li>Member since <%= current_user.created_at.strftime("%B %-m, %Y") %></li>
     </ul>
 
 </section>
