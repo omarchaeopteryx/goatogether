@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
   def index
+    @journey = Journey.new
     @allresults = []
     if current_user
       @results1 = current_user.twitter.search("#goatogether")
