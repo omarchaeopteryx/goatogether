@@ -141,6 +141,7 @@ $(document).ready(function(){
   })
   .done(function(response){
     var tweetResponse = response;
+    console.log(tweetResponse);
     var icons = {
       parking: {
         icon: 'http://pngimg.com/upload/bear_PNG1191.png'
@@ -154,7 +155,7 @@ $(document).ready(function(){
         map: map
       });
       locations.push(['Test', lat, long, 4])
-      console.log(locations)
+      // console.log(locations)
       return marker
     }
 
@@ -184,15 +185,28 @@ $(document).ready(function(){
       //for each tweet object it pulls the longitude and latitude depending on where theyre store
       //it then creates a map marker for each one
       tweetResponse.forEach(function(element, elementIndex){
+
         element.forEach(function(element1, elementIndex1) {
+
+          var tweetBodyText = element1.text;
+          var tweetBodyAuthor = element1.user.screen_name;
+          // console.log(tweetBodyText);
+          // console.log(tweetBodyAuthor); <-- Debugging
+
           if(element1.place){
             var latitude = element1.place.bounding_box.coordinates[0][1][0];
             var longitude = element1.place.bounding_box.coordinates[0][1][1];
             addMarker(longitude,latitude).addListener('click', function() {
-              // console.log("you clicked on" + longitude + latitude) // testing for responsiveness.
-              $(".nav2").addClass("menushow2"); // bringing out slider from the right (NOTE: this is repetitive).
+
+              // console.log("you clicked on" + longitude + latitude) // <-- Testing for responsiveness.
+
+              // Bringing out slider from the right (might need to make into function):
+              $(".nav2").addClass("menushow2");
               $(".menu-btn2").addClass("button-slide");
-              $('.place-coordinates').text("lat: " + latitude + "\n long: " + longitude) // adding lat, long to sidebar.
+
+              // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
+              $('.place-coordinates')
+                .text("@" + tweetBodyAuthor + " says: " + tweetBodyText + "\n From lat: " + latitude + "\n long: " + longitude)
             });
           }
           if(element1.coordinates){
@@ -202,7 +216,8 @@ $(document).ready(function(){
             .addListener('click', function() {
               $(".nav2").addClass("menushow2");
               $(".menu-btn2").addClass("button-slide");
-              $('.place-coordinates').text("lat: " + latitude + "\n long: " + longitude)
+              $('.place-coordinates')
+                .html("<h1 class='user-highlight'>@" + tweetBodyAuthor + " says: </h1><div class='user-highlight-text'>" + tweetBodyText + "</div><br><h5>From lat: " + latitude + "<br>long: " + longitude + "</h5>")
             });
           }
         });
