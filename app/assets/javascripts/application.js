@@ -189,6 +189,3 @@ $(document).ready(function(){
     $('div#overlay').css('display', 'block')
   })
 })
-
-
-

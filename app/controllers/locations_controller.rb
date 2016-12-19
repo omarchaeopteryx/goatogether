@@ -1,17 +1,22 @@
 class LocationsController < ApplicationController
   def index
-        @allresults = []
-    @results1 = current_user.twitter.search("#goatogether")
-    @results2 = current_user.twitter.search("#GoatTogether")
-    # @results3 = current_user.twitter.search("@realDonaldTrump")
-    @allresults << @results1
-    @allresults << @results2
+    @allresults = []
+    if current_user
+      @results1 = current_user.twitter.search("#goatogether")
+      @results2 = current_user.twitter.search("#GoatTogether")
+      # @results3 = current_user.twitter.search("@realDonaldTrump")
+      @allresults << @results1
+      @allresults << @results2
     # @allresults << @results3
-
-     respond_to do |format|
-      format.html
-      format.json { render json: @allresults }
+      respond_to do |format|
+        format.html
+        format.json { render json: @allresults }
+      end
+    else
+      render 'users/login', layout: false
     end
+
+
   end
 
   def show
