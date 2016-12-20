@@ -5,6 +5,11 @@ class SessionsController < ApplicationController
     redirect_to '/'
   end
 
+  def logout
+    reset_session
+    redirect_to '/'
+  end
+
   protected
 
   def auth_hash

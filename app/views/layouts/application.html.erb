@@ -34,7 +34,7 @@
        <ul class="menu-user">
           <li><a href="/users/<%= if current_user then current_user.id end %>"><i class="fa fa-user-circle" aria-hidden="true"></i> User</a></li>
           <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
-          <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+          <li><a href="/sessions/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
 
       </ul>
     </nav>
@@ -45,7 +45,7 @@
           <a href="">+</a>
         </div>
         <ul class="menu-nav2">
-           <%= render 'location_view' %>
+           <%= render 'locations/location_view' %>
         </ul>
       </nav>
 

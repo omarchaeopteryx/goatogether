@@ -42,7 +42,7 @@ class JourneysController < ApplicationController
   end
 
   def show
-    render :_journey_show
+    # render :_journey_show
   end
 
   def random
@@ -57,7 +57,7 @@ class JourneysController < ApplicationController
     end
     journey_count = random_journey.count
     @journey = random_journey[rand(0..(journey_count-1))]
-    render :random
+    render :show
   end
 
   def edit

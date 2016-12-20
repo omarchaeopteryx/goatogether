@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20161219225912) do
     t.string   "hashtag"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.string   "name"
   end
 
   create_table "locations", force: :cascade do |t|
