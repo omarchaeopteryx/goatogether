@@ -169,7 +169,7 @@ $(document).ready(function(){
       function addMarker(lat, long) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, long),
-            // icon: icons['parking'].icon,
+            // icon: '',
             map: map
           });
           return marker
@@ -177,8 +177,11 @@ $(document).ready(function(){
 
 
     function createLocationPage(newLat, newLong, element1){
+         var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
+
+
         $(".nav2").addClass("menushow2");
         $(".menu-btn2").addClass("button-slide");
         $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());

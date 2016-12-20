@@ -3,7 +3,7 @@ class LocationsController < ApplicationController
 
     if current_user
       @allresults = []
-      # @allresults << filterGeoOnly(current_user.twitter)
+      @allresults << filterGeoOnly(current_user.twitter)
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
@@ -29,13 +29,13 @@ class LocationsController < ApplicationController
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  def filterGeoOnly(twitter_client, max_id=nil, results=[], pins=25)
+  def filterGeoOnly(twitter_client, max_id=nil, results=[], pins=10)
     if results.length >= pins
       results.slice!(pins..-1)
       return results
     else
 
-      results2 = twitter_client.search("#coffee", geocode:"32,-117,200mi", max_id: max_id).to_a
+      results2 = twitter_client.search("#coffee", geocode:"32,-117,50mi", max_id: max_id).to_a
       results.concat(results2)
       max_id = results.last.id
 
