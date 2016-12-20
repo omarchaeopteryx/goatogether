@@ -14,14 +14,14 @@ class JourneysController < ApplicationController
     @journey.user_id = current_user.id
     if @journey.save
       friends.each do |friend|
-        @invite = Invite.new(journey_id: @journey.id)
         uid = current_user.twitter.user("#{friend}").id
         @guest = User.find_or_initialize_by(uid: uid)
         @guest.provider = "twitter"
         @guest.name = "guest"
         @guest.save
-        @invite.guest_id = @guest.id
+        @invite = Invite.new(journey_id: @journey.id, guest_id: @guest.id, host_id: current_user.id)
         @invite.save
+        p "invite.id: #{@invite.id}, invite.guest_id: #{@invite.guest_id}, invite.journey_id: #{@invite.journey_id}"
       end
       respond_to do |format|
        format.html {redirect_to journeys_path}
@@ -50,7 +50,7 @@ class JourneysController < ApplicationController
   end
 
   def invite_params
-    params.require(:invite).permit(:guest_id, :journey_id)
+    params.require(:invite).permit(:guest_id)
   end
 
   def current_user
@@ -62,7 +62,8 @@ class JourneysController < ApplicationController
   end
 
   def upcoming_journey
-    Journey.find_by(user_id: session[:user_id])
+    @journeys = Journey.find_by(user_id: session[:user_id])
+    @journeys.select{ |journey| }
   end
 
   def previous_journey
