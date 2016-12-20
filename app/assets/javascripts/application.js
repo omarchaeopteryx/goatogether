@@ -181,7 +181,7 @@ $(document).ready(function(){
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
 
-
+        $('.nav-2-location-contents').removeClass('hide')
         $(".nav2").addClass("menushow2");
         $(".menu-btn2").addClass("button-slide");
         $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());
@@ -216,7 +216,25 @@ $(document).ready(function(){
           }else{
           }
         });
+  })
+
+   $('.search-form').on('submit', function(event){
+    event.preventDefault();
+    var data = $('.search-form').serialize();
+    $.get('/journeys/search', data).done(function(response){
+      response.forEach(function(element, elementIndex1) {
+          if(element.coordinates){
+            var latitude = element.coordinates.coordinates[1];
+            var longitude = element.coordinates.coordinates[0];
+            createLocationPage(latitude, longitude, element)
+          }else if(element.place){
+            var latitude = element.place.bounding_box.coordinates[0][1][1];
+            var longitude = element.place.bounding_box.coordinates[0][1][0];
+            createLocationPage(latitude, longitude, element)}
+       });
     })
+  })
+
 })
 
 

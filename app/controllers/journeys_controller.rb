@@ -4,10 +4,13 @@ class JourneysController < ApplicationController
 
   def search
    search = params[:search]
-   @users = User.where('lower(name) ~* ?', "[#{search.downcase}]")
-   p @users
-   render :_search
+   @users = twitter_search(current_user.twitter, search)
 
+   if request.xhr?
+    render :json => @users
+   else
+    render :_search
+   end
   end
 
   def create
@@ -25,6 +28,22 @@ class JourneysController < ApplicationController
   end
 
   private
+
+  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=5)
+    search_term = search_term.to_s
+    if results.length >= pins
+      results.slice!(pins..-1)
+      return results
+    else
+
+      results2 =  current_user.twitter.search(search_term, geocode:"32,-117,100mi", max_id: max_id).take(10).to_a
+      results = results.concat(results2)
+      max_id = results.last.id
+
+      results.select!{|tweet| tweet.geo? }
+      twitter_search(twitter_client,search_term, max_id, results)
+    end
+  end
 
   def journey_params
     params.require(:journey).permit(:name, :hashtag)
