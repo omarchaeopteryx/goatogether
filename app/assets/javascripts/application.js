@@ -226,6 +226,12 @@ $(document).ready(function(){
     $("nav1").toggleClass("menushow");
   });
 
+  $(".menu-btn2").click(function(event){
+    event.preventDefault();
+    $(".nav2").removeClass("menushow2");
+  });
+
+
 
 // Begin pop up modal
   $("a[href='/journeys/new']").on('click', function(e){

@@ -29,7 +29,7 @@ class LocationsController < ApplicationController
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  def filterGeoOnly(twitter_client, max_id=nil, results=[], pins=10)
+  def filterGeoOnly(twitter_client, max_id=nil, results=[], pins=3)
     if results.length >= pins
       results.slice!(pins..-1)
       return results
@@ -40,7 +40,6 @@ class LocationsController < ApplicationController
       max_id = results.last.id
 
       results.select!{|tweet| tweet.geo? }
-      puts "recurse: #{results.length}"
       filterGeoOnly(twitter_client, max_id, results)
     end
   end
