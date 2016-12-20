@@ -2,7 +2,7 @@ class JourneysController < ApplicationController
   def index
     @journey = Journey.new
     @journeys = users_journeys
-    # redirect_to '/' # <-- This still breaks when tries to redirect to show page
+    redirect_to '/'
   end
 
   def new

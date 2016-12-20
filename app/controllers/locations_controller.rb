@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
     @allresults = []
     if current_user
       @allresults = []
-      @allresults << filterGeoOnly(current_user.twitter)
+      # @allresults << filterGeoOnly(current_user.twitter)
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
