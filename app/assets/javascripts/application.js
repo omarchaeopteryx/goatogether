@@ -14,10 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-
+var newGoogleMapsDestinationTemplate;
+var currentLocation;
 function initialize() {
-  locations = [
-  ['San Diego', 32.65, -117.05, 4]];
+  navigator.geolocation.getCurrentPosition(function(position){
+  currentLocation = ['Youre Current Location', position.coords.latitude, position.coords.longitude, 4]
+  locations = [currentLocation];
 
   window.map = new google.maps.Map(document.getElementById('map'), {
    mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -128,12 +130,13 @@ function initialize() {
     map.setZoom(7);
     google.maps.event.removeListener(listener);
   });
+})
 }
 
 
 
-
 $(document).ready(function(){
+
   $.ajax({
     url: '/',
     method: "GET",
@@ -141,7 +144,6 @@ $(document).ready(function(){
   })
   .done(function(response){
     var tweetResponse = response;
-    console.log(tweetResponse);
     var icons = {
       parking: {
         icon: 'http://pngimg.com/upload/bear_PNG1191.png'
@@ -155,7 +157,6 @@ $(document).ready(function(){
         map: map
       });
       locations.push(['Test', lat, long, 4])
-      // console.log(locations)
       return marker
     }
 
@@ -169,56 +170,41 @@ $(document).ready(function(){
       $(".nav2").removeClass("menushow2");
     });
 
+    function createLocationPage(newLat, newLong, element1){
+        addMarker(newLat,newLong).addListener('click', function() {
+        // Bringing out slider from the right (might need to make into function):
+        $(".nav2").addClass("menushow2");
+        $(".menu-btn2").addClass("button-slide");
+        $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());
+        // NEW! Here is a series of steps that will make a new URL for google streetview...
+        var oldGoogleMapsDestination = $("iframe").attr('src');
+        var GOOGLE_API_KEY = "AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ"; // NEED to hide this.
 
-    google.maps.event.addListener(marker, 'click', function () {
-      $(".nav2").addClass("menushow2");
-      $(".menu-btn2").addClass("button-slide");
-      currentMarker = $(this)
-      $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());
-   });
+        newGoogleMapsDestinationTemplate = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ&location="+newLat+","+newLong;
 
-
-
+        $("iframe").attr('src', newGoogleMapsDestinationTemplate); // Replace old with the new.
+        // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
+        $('.tweet-description').text("@" + element1.user.screen_name + " says: " + element1.text)
+        $('.place-coordinates').text("\n From lat: " + newLat + "\n long: " + newLong)
+      });
+    }
 
       //the tweet response is an array of arrays, each containing tweet object
       //the code below iterates through the tweet response array, and the contained sub arrays
       //for each tweet object it pulls the longitude and latitude depending on where theyre store
       //it then creates a map marker for each one
       tweetResponse.forEach(function(element, elementIndex){
-
         element.forEach(function(element1, elementIndex1) {
-
-          var tweetBodyText = element1.text;
-          var tweetBodyAuthor = element1.user.screen_name;
-          // console.log(tweetBodyText);
-          // console.log(tweetBodyAuthor); <-- Debugging
-
-          if(element1.place){
-            var latitude = element1.place.bounding_box.coordinates[0][1][0];
-            var longitude = element1.place.bounding_box.coordinates[0][1][1];
-            addMarker(longitude,latitude).addListener('click', function() {
-
-              // console.log("you clicked on" + longitude + latitude) // <-- Testing for responsiveness.
-
-              // Bringing out slider from the right (might need to make into function):
-              $(".nav2").addClass("menushow2");
-              $(".menu-btn2").addClass("button-slide");
-
-              // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
-              $('.place-coordinates')
-                .text("@" + tweetBodyAuthor + " says: " + tweetBodyText + "\n From lat: " + latitude + "\n long: " + longitude)
-            });
-          }
           if(element1.coordinates){
-            var latitude = element1.coordinates.coordinates[0];
-            var longitude = element1.coordinates.coordinates[1];
-            addMarker(longitude,latitude)
-            .addListener('click', function() {
-              $(".nav2").addClass("menushow2");
-              $(".menu-btn2").addClass("button-slide");
-              $('.place-coordinates')
-                .html("<h1 class='user-highlight'>@" + tweetBodyAuthor + " says: </h1><div class='user-highlight-text'>" + tweetBodyText + "</div><br><h5>From lat: " + latitude + "<br>long: " + longitude + "</h5>")
-            });
+            var latitude = element1.coordinates.coordinates[1];
+            var longitude = element1.coordinates.coordinates[0];
+            createLocationPage(latitude, longitude, element1)
+          }else if(element1.place){
+
+            var latitude = element1.place.bounding_box.coordinates[0][1][1];
+            var longitude = element1.place.bounding_box.coordinates[0][1][0];
+            createLocationPage(latitude, longitude, element1)
+          }else{
           }
         });
       })

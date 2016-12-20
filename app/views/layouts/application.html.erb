@@ -10,6 +10,8 @@
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initialize"
     type="text/javascript"></script>
 
+
+
   </head>
   <body>
   <div class="logo">
@@ -18,7 +20,7 @@
   <div class ="search">
     <form><input type="text" name="search" placeholder="search for location, user, or hashtag"><i class="fa fa-search" aria-hidden="true"></i></form>
   </div>
-    <nav>
+    <nav class='nav1'>
       <div class="menu-btn">
         <a href="#">+</a>
       </div>
@@ -33,6 +35,15 @@
           <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
       </ul>
     </nav>
+
+      <nav class='nav2'>
+        <div class="menu-btn2">
+          <a href="">+</a>
+        </div>
+        <ul class="menu-nav2">
+           <%= render 'location_view' %>
+        </ul>
+      </nav>
 
 
     <article>
