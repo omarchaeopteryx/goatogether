@@ -19,7 +19,7 @@ class JourneysController < ApplicationController
         @guest.provider = "twitter"
         @guest.name = "guest"
         @guest.save
-        @invite = Invite.new(journey_id: @journey.id, guest_id: @guest.id, host_id: current_user.id)
+        @invite = Invite.new(journey_id: @journey.id, guest_id: @guest.id)
         @invite.save
         p "invite.id: #{@invite.id}, invite.guest_id: #{@invite.guest_id}, invite.journey_id: #{@invite.journey_id}"
       end
@@ -61,12 +61,15 @@ class JourneysController < ApplicationController
     Journey.find_by(id: params[:id])
   end
 
+  def users_journeys
+    Journey.select{ |journey| user_id == session[:user_id] }
+  end
+
   def upcoming_journey
-    @journeys = Journey.find_by(user_id: session[:user_id])
-    @journeys.select{ |journey| }
+    users_journeys.select{|journey| journey.start_time < Time.zone.now }
   end
 
   def previous_journey
-
+    users_journeys.select{|journey| journey.start_time > Time.zone.now }
   end
 end
