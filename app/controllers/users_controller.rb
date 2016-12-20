@@ -20,6 +20,7 @@ class UsersController <  ApplicationController
 
   def show
     if current_user
+      @journey = find_journey
       render :show
     else
       redirect_to new_user_path
@@ -42,5 +43,9 @@ class UsersController <  ApplicationController
         redirect_to new_user_path
       end
     end
+
+  def find_journey
+    Journey.find_by(id: params[:id]) || @journey = Journey.new
+  end
 
 end
