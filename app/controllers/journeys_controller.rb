@@ -33,6 +33,17 @@ class JourneysController < ApplicationController
   end
 
   def random
+    journeys = Journey.where('user_id != ?', current_user.id)
+    random_journey = []
+    journeys.each do |journey|
+      journey.invites.each do |invite|
+        if invite.guest_id != current_user.id
+          random_journey << journey
+        end
+      end
+    end
+    journey_count = random_journey.count
+    @journey = random_journey[rand(0..(journey_count-1))]
     render :random
   end
 
