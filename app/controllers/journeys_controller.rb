@@ -10,6 +10,13 @@ class JourneysController < ApplicationController
     render :_new
   end
 
+  def search
+   search = params[:search]
+   @users = User.where('lower(name) ~* ?', "[#{search.downcase}]")
+   p @users
+   render :_search
+  end
+
   def create
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
@@ -39,7 +46,11 @@ class JourneysController < ApplicationController
     @journey = find_journey
   end
 
-  private
+  def edit
+    @journey = Journey.find_by_id(params[:id])
+  end
+
+private
 
   # takes the friends param and breaks it up into individual people
   def friends
