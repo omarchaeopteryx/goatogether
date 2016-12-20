@@ -15,14 +15,13 @@ class JourneysController < ApplicationController
     if @journey.save
       friends.each do |friend|
         @invite = Invite.new(journey_id: @journey.id)
-        @uid = current_user.twitter.user("#{friend}").id
-        @guest = User.find_or_initialize_by(uid: @uid)
+        uid = current_user.twitter.user("#{friend}").id
+        @guest = User.find_or_initialize_by(uid: uid)
         @guest.provider = "twitter"
         @guest.name = "guest"
         @guest.save
         @invite.guest_id = @guest.id
         @invite.save
-        p "uid: #{@uid}, invite: #{@invite}, guest: #{@guest.id}"
       end
       respond_to do |format|
        format.html {redirect_to journeys_path}
@@ -40,10 +39,6 @@ class JourneysController < ApplicationController
   end
 
   private
-  # convert friend into a twitter uid
-  def username_to_uid
-    current_user.twitter.user("#{friend}").id
-  end
 
   # takes the friends param and breaks it up into individual people
   def friends
