@@ -1,6 +1,30 @@
+<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<script src="https://use.fontawesome.com/f3f0aa6a92.js"></script>
+
+<div class='alerts'>
+  <ul>
+  <li><%= flash[:notice] %></li>
+  </ul>
+</div>
 
 <div id='login-page'>
-  <form action="/auth/twitter" method="get">
-    <button id='twitter-login-button' type='submit'><img alt="Sign in with Twitter" src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-link.png"></button>
-  </form>
+  <div class="login-interior">
+    <h1>Welcome to goatogether!</h1>
+    <p>goatogether uses twitter authentication to log you in and map your tweets.</p>
+    <ul class="twitter-permissions">
+      <li>Read Tweets from your timeline.</li>
+      <li>See who you follow, and follow new people.</li>
+      <li>Update your profile.</li>
+      <li>Post Tweets for you.</li>
+    </ul>
+
+    <div class="twitter-login">
+      <form action="/auth/twitter" method="get">
+        <button id='twitter-login-button' type='submit'><i class="fa fa-twitter" aria-hidden="true"></i> Sign in with Twitter</button>
+      </form>
+      <span>Don't have a twitter account?</span>
+      <a href="https://twitter.com/signup?lang=en">Join Twitter</a>
+    </div>
+  </div>
 </div>
+

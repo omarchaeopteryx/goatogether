@@ -1,0 +1,14 @@
+<h1><%= @instuser.username %>'s Journey Photos</h1>
+
+<section class="profile-image-stream">
+  <h2>Tag name... <%= @tags[0].name %> Media count... <%= @tags[0].media_count %>
+  </h2>
+  <div class="profile-image-stream-div">
+    <% @images.each do |media_item| %>
+      <img src='<%= media_item.images.thumbnail.url %>'</img>
+      <p><%= media_item.location %></p>
+    <% end %>
+  </div>
+  <p><%= @latlongs.inspect %></p>
+
+</section>

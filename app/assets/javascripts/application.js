@@ -165,10 +165,16 @@ $(document).ready(function(){
       $(".nav1").toggleClass("menushow");
     });
 
-    $(".menu-btn2").click(function(event){
-      event.preventDefault();
-      $(".nav2").removeClass("menushow2");
-    });
+
+      function addMarker(lat, long) {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, long),
+            // icon: icons['parking'].icon,
+            map: map
+          });
+          return marker
+        }
+
 
     function createLocationPage(newLat, newLong, element1){
         addMarker(newLat,newLong).addListener('click', function() {
@@ -207,10 +213,23 @@ $(document).ready(function(){
           }else{
           }
         });
-      })
     })
-
 })
 
 
 
+  $(".menu-btn1").click(function(event){
+    event.preventDefault();
+    $("nav1").toggleClass("menushow");
+  });
+
+
+// Begin pop up modal
+  $("a[href='/journeys/new']").on('click', function(e){
+    e.preventDefault();
+    $('div#overlay').css('display', 'block');
+    $('.close').on('click', function(){
+      $('div#overlay').css('display', 'none');
+    })
+  })
+})

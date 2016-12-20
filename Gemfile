@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'dotenv-rails', :groups => [:development, :test]
-
+gem 'instagram',  :git => 'git://github.com/Instagram/instagram-ruby-gem.git'
+# gem "faraday", "~> 0.8.9" # OM: Might be needed to fix insta gem
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use postgresql as the database for Active Record

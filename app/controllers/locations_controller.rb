@@ -1,12 +1,18 @@
 class LocationsController < ApplicationController
   def index
-    @allresults = []
-    @allresults << filterGeoOnly(current_user.twitter)
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @allresults }
+    if current_user
+      @allresults = []
+      # @allresults << filterGeoOnly(current_user.twitter)
+      respond_to do |format|
+        format.html
+        format.json { render json: @allresults }
+      end
+    else
+      render 'users/login', layout: false
     end
+
+
   end
 
   def edit

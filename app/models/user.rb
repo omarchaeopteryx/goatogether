@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :journeys
+  has_many :invites, {foreign_key: :guest_id}
 
   #look up the user or create the user using the auth hash
   def self.find_or_create_from_auth_hash(auth_hash)
