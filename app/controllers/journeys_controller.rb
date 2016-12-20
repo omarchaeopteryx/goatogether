@@ -4,18 +4,31 @@ class JourneysController < ApplicationController
   end
 
   def new
+    @journey = Journey.new
   end
 
   def create
     @journey = Journey.new(journey_params)
-    @invite = Invite.new(invite_params)
-
     if @journey.save
-      @invite.save
-      redirect_to "/users/#{current_user.id}"
+      friends.each do |friend|
+        @invite = Invite.new(journey_id: @journey.id)
+        # convert friend into a twitter uid
+        @uid = current_user.twitter.user("#{friend.slice!(0)}").id
+        @invite.guest_id = User.find_by(uid: @uid).id
+      end
+      respond_to do |format|
+        format.html {}
+        format.json {}
+      end
     else
       @journey.errors.full_messages
+       respond_to do |format|
+        format.html { redirect_to "/users/#{current_user.id}" }
+        format.json {}
+      end
     end
+
+
   end
 
   def show
@@ -23,9 +36,16 @@ class JourneysController < ApplicationController
   end
 
   private
+  def uid_to_username
+
+  end
+  # takes the friends param and breaks it up into individual people
+  def friends
+    params[:friends][:guest_id].split(", ")
+  end
 
   def journey_params
-    params.require(:journey).permit(:name, :hashtag, :start_time, :end_time, :time)
+    params.require(:journey).permit(:name, :hashtag, :start_time, :end_time)
   end
 
   def invite_params
