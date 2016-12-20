@@ -9,7 +9,6 @@ class JourneysController < ApplicationController
    render :_search
 
   end
-
   def create
     @journey = Journey.new(journey_params)
     @invite = Invite.new(invite_params)
