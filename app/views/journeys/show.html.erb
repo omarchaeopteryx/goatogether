@@ -1,11 +1,17 @@
 <h2><%= @journey.name %></h2>
-<p><%= @journey.start_time%> - <%= @journey.end_time %></p>
+<p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
+
+
+<%
+=begin %>
 <% @posts.each do |post| %>
-  <% if post.type == instagram %>
-    <p><i class="fa fa-instagram" aria-hidden="true"></i>
+  <% if post.provider == twitter %>
+    <p><i class="fa fa-twitter-square" aria-hidden="true"></i>
     <% post.content %></p>
   <% else %>
-    <p><i class="fa fa-twitter-square" aria-hidden="true"></i>
+    <p><i class="fa fa-instagram" aria-hidden="true"></i>
     <% post.content %></p>
   <% end %>
 <% end %>
+<%
+=end %>

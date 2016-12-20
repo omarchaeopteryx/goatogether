@@ -1,7 +1,8 @@
 class JourneysController < ApplicationController
   def index
-    @journeys = Journey.where(user_id: session[:user_id])
-    redirect_to '/' # <-- This still breaks when tries to redirect to show page
+    @journey = Journey.new
+    @journeys = users_journeys
+    # redirect_to '/' # <-- This still breaks when tries to redirect to show page
   end
 
   def new
@@ -62,14 +63,6 @@ class JourneysController < ApplicationController
   end
 
   def users_journeys
-    Journey.select{ |journey| user_id == session[:user_id] }
-  end
-
-  def upcoming_journey
-    users_journeys.select{|journey| journey.start_time < Time.zone.now }
-  end
-
-  def previous_journey
-    users_journeys.select{|journey| journey.start_time > Time.zone.now }
+    Journey.where(user_id: session[:user_id])
   end
 end
