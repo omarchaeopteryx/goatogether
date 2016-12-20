@@ -1,5 +1,6 @@
 class JourneysController < ApplicationController
   def new
+    render :_new
   end
 
   def search
@@ -24,7 +25,23 @@ class JourneysController < ApplicationController
     end
   end
 
-  private
+  def index
+    redirect_to '/'
+  end
+
+  def show
+    render :_journey_show
+  end
+
+  def random
+    render :random
+  end
+
+  def edit
+    @journey = Journey.find_by_id(params[:id])
+  end
+
+private
 
   def journey_params
     params.require(:journey).permit(:name, :hashtag)
@@ -37,4 +54,5 @@ class JourneysController < ApplicationController
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
+
 end
