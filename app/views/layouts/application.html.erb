@@ -10,6 +10,8 @@
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initialize"
     type="text/javascript"></script>
 
+
+
   </head>
   <body>
   <div class="logo">
@@ -20,7 +22,7 @@
       <input type="text" name="search" placeholder="search for location, user, or hashtag"><i class="fa fa-search" aria-hidden="true"></i>
     </form>
   </div>
-    <nav>
+    <nav class='nav1'>
       <div class="menu-btn">
         <a href="#">+</a>
       </div>
@@ -36,9 +38,21 @@
 
       </ul>
     </nav>
+
+
+      <nav class='nav2'>
+        <div class="menu-btn2">
+          <a href="">+</a>
+        </div>
+        <ul class="menu-nav2">
+           <%= render 'location_view' %>
+        </ul>
+      </nav>
+
     <div id="overlay">
       <%= render "journeys/new" %>
     </div>
+
 
     <article>
       <%= yield %>

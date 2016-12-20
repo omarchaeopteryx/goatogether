@@ -1,13 +1,9 @@
 class LocationsController < ApplicationController
   def index
-    @allresults = []
+
     if current_user
-      @results1 = current_user.twitter.search("#goatogether")
-      @results2 = current_user.twitter.search("#GoatTogether")
-      # @results3 = current_user.twitter.search("@realDonaldTrump")
-      @allresults << @results1
-      @allresults << @results2
-    # @allresults << @results3
+      @allresults = []
+      @allresults << filterGeoOnly(current_user.twitter)
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
@@ -19,8 +15,12 @@ class LocationsController < ApplicationController
 
   end
 
+  def edit
+
+  end
+
   def show
-    render 'index'
+
   end
 
    private
@@ -29,4 +29,18 @@ class LocationsController < ApplicationController
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def filterGeoOnly(twitter_client, max_id=nil, results=[], pins=3)
+    if results.length >= pins
+      results.slice!(pins..-1)
+      return results
+    else
+
+      results2 = twitter_client.search("#coffee", geocode:"32,-117,50mi", max_id: max_id).to_a
+      results.concat(results2)
+      max_id = results.last.id
+
+      results.select!{|tweet| tweet.geo? }
+      filterGeoOnly(twitter_client, max_id, results)
+    end
+  end
 end
