@@ -24,7 +24,6 @@ class JourneysController < ApplicationController
    @users = User.where('lower(name) ~* ?', "[#{search.downcase}]")
    render :_search
   end
-
   def create
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
@@ -51,7 +50,22 @@ class JourneysController < ApplicationController
   end
 
   def show
-    @journey = find_journey
+    # render :_journey_show
+  end
+
+  def random
+    journeys = Journey.where('user_id != ?', current_user.id)
+    random_journey = []
+    journeys.each do |journey|
+      journey.invites.each do |invite|
+        if invite.guest_id != current_user.id
+          random_journey << journey
+        end
+      end
+    end
+    journey_count = random_journey.count
+    @journey = random_journey[rand(0..(journey_count-1))]
+    render :show
   end
 
   def edit
