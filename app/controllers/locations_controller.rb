@@ -1,6 +1,7 @@
 class LocationsController < ApplicationController
   def index
-
+    @journey = Journey.new
+    @allresults = []
     if current_user
       @allresults = []
       # @allresults << filterGeoOnly(current_user.twitter)
@@ -23,7 +24,7 @@ class LocationsController < ApplicationController
 
   end
 
-   private
+  private
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]

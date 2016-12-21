@@ -9,11 +9,9 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initialize"
     type="text/javascript"></script>
-
-
-
   </head>
   <body>
+
   <div class="logo">
     <h1><a href="/">龴⊙,,⊙龴 goatogether</a></h1>
   </div>
@@ -22,38 +20,40 @@
       <input class="search-input" type="text" name="search" placeholder="search for location, user, or hashtag"><i class="fa fa-search" aria-hidden="true"></i>
     </form>
   </div>
+
     <nav class='nav1'>
       <div class="menu-btn">
         <a href="#">+</a>
       </div>
       <ul class="menu-nav">
-         <li><a href="#">Explore</a></li>
+         <li><a href="/">Explore</a></li>
          <li><a href="/journeys/new">Begin</a></li>
-         <li><a href="#">I'm feeling Adventurous</a></li>
+         <li><a href="/journeys/random">I'm feeling Adventurous</a></li>
        </ul>
        <ul class="menu-user">
-          <li><a href="/users/<%= if current_user then current_user.id end %>"><i class="fa fa-user-circle" aria-hidden="true"></i> User</a></li>
+          <li id="user-profile"><a href="/users/<%= if current_user then current_user.id end %>"><i class="fa fa-user-circle" aria-hidden="true"></i> User</a></li>
           <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
-          <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
-
+          <li><a href="/sessions/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
       </ul>
     </nav>
 
+  <nav class='nav2'>
+    <div class="menu-btn2">
+      <a href="">+</a>
+    </div>
+    <ul class="menu-nav2">
+      <%= render 'shared/slideout' %>
+    </ul>
+  </nav>
 
-      <nav class='nav2'>
-        <div class="menu-btn2">
-          <a href="">+</a>
-        </div>
-        <ul class="menu-nav2">
-        <%= render 'location_view' %>
-        </ul>
-      </nav>
-
-
-    <article>
-      <%= yield %>
-    </article>
+  <div id="overlay">
+    <%= render "journeys/new" %>
+  </div>
 
 
-  </body>
-  </html>
+  <article>
+    <%= yield %>
+  </article>
+
+</body>
+</html>
