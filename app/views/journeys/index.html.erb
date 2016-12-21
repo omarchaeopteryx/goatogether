@@ -5,10 +5,12 @@
   <% @pending_invitations.each do |invite| %>
     <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
       <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></li>
-      <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></li>
-      <form class="invite-response-form" action='/invites/<%= invite.id%>' method="put"><button class='invite-response-button' alt='Yes'><i class="fa fa-check-circle-o">Yes</button></i><button class='invite-response-button' alt='No'><i class="fa fa-times-circle">No</button></i></form>
+      <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></a></li>
+      <form class="invite-response-form" action='/invites/<%= invite.id %>' method="post">
+      <input type="hidden" name="_method" value="put"><button class='response-input' type='text' name='response' value='true'>Yes</button></input>
+      <input type="hidden" name="_method" value="put"><button class="response-input" type="text" name="response" value="false">No</button></input>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %></form>
   <% end %>
-
 <% end %>
 
 <% if @upcoming_journeys %>
