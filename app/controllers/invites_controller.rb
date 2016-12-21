@@ -4,6 +4,7 @@ class InvitesController < ApplicationController
     if current_user
       @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     end
+    render :index
   end
 
     def new

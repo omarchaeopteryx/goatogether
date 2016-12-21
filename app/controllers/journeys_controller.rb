@@ -4,7 +4,6 @@ class JourneysController < ApplicationController
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
-
     if request.xhr?
       render :index, layout: false
     else
@@ -23,7 +22,6 @@ class JourneysController < ApplicationController
   def search
    search = params[:search]
    @users = twitter_search(current_user.twitter, search)
-
    if request.xhr?
     render :json => @users
    else
@@ -34,9 +32,7 @@ class JourneysController < ApplicationController
   def create
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
-    puts "Test"
-    p journey_params
-    p @journey
+
     if @journey.save
       friends.each do |friend|
         uid = current_user.twitter.user("#{friend}").id
@@ -66,7 +62,7 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.find(params[:journey_id])
-    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
+    @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
       p result.created_at
