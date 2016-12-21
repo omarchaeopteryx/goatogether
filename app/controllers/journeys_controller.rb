@@ -33,6 +33,9 @@ class JourneysController < ApplicationController
   def create
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
+    puts "Test"
+    p journey_params
+    p @journey
     if @journey.save
       friends.each do |friend|
         uid = current_user.twitter.user("#{friend}").id

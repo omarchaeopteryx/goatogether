@@ -4,9 +4,9 @@ class LocationsController < ApplicationController
     @allresults = []
     if current_user
       @pending_invitations = Invite.where("guest_id = ?", current_user.id)
-      p @pending_invitations
-      p @pending_invitations
-      @allresults = []
+      # p @pending_invitations
+      # p @pending_invitations
+      # @allresults = []
       respond_to do |format|
         format.html
         format.json { render json: @allresults }

@@ -1,11 +1,14 @@
 <h1><%= current_user.name %></h1>
 <% unless @pending_invitations.empty? %>
   <h2 class='invitations'>Your Invitations</h2><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
+
   <% @pending_invitations.each do |invite| %>
-  <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
-  <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></p>
-   <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></p>
+    <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
+      <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></li>
+      <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></li>
+      <form class="invite-response-form" action='/invites/<%= invite.id%>' method="post"><button class='invite-response-button'><i class="fa fa-check-circle-o">Yes</button></i><button class='invite-response-button'><i class="fa fa-times-circle">No</button></i></form>
   <% end %>
+
 <% end %>
 
 <% if @upcoming_journeys %>
