@@ -252,7 +252,6 @@ $(document).ready(function(){
 
   $(".menu-nav li").first().css('background-color', '#5f846c');
   $(".menu-nav li").click(function(event){
-    event.preventDefault();
     $(this).siblings().css('background-color', '#719E81');
     $(this).css('background-color', '#5f846c');
   });
