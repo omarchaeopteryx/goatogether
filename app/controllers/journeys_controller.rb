@@ -3,7 +3,7 @@ class JourneysController < ApplicationController
     @journey = Journey.new
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
-
+    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
     if request.xhr?
       render :index, layout: false
     else
@@ -29,8 +29,8 @@ class JourneysController < ApplicationController
    else
     render :_search
    end
-
   end
+
   def create
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
