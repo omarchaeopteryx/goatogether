@@ -110,7 +110,7 @@ private
   end
 
 
-  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=1)
+  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=2)
     search_term = search_term.to_s
     if results.length >= pins
       results.slice!(pins..-1)
