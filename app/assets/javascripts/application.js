@@ -73,7 +73,7 @@ function initialize() {
       "elementType": "labels.text.stroke",
       "stylers": [{"color": "#ABCE83"}]},
       {"featureType": "road",
-      "elementType": "labels.icon",
+      // "elementType": "labels.icon",
       "stylers": [{"visibility": "off"}]},
       {"featureType": "road.highway",
       "elementType": "geometry",
@@ -144,16 +144,11 @@ $(document).ready(function(){
   })
   .done(function(response){
     var tweetResponse = response;
-    var icons = {
-      parking: {
-        icon: 'http://pngimg.com/upload/bear_PNG1191.png'
-      }
-    };
 
     function addMarker(lat, long) {
+      console.log('AAAAAAAAAHHHHHHH')
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
-        // icon: icons['parking'].icon,
         map: map
       });
       locations.push(['Test', lat, long, 4])
@@ -178,8 +173,7 @@ $(document).ready(function(){
 
     // Marker is clicked, slide out slidey
     function createLocationPage(newLat, newLong, element1){
-      console.log(element1)
-        var currentMarker = $(this);
+        console.log('Start of create pin');
         addMarker(newLat,newLong).addListener('click', function() {
           $.ajax({
             url: "/posts/show",
@@ -200,6 +194,7 @@ $(document).ready(function(){
             $('#twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
           });
       });
+        console.log('added pin')
     }
 
       //the tweet response is an array of arrays, each containing tweet object
