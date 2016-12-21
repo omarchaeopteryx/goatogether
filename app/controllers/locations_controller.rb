@@ -12,8 +12,6 @@ class LocationsController < ApplicationController
     else
       render 'users/login', layout: false
     end
-
-
   end
 
   def edit
