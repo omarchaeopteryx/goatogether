@@ -25,13 +25,11 @@
       <div class="menu-btn">
         <a href="#">+</a>
       </div>
-      <div class="notices invitations">
-        <% if @pending_invitations %>
-          <i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
-        <p>You have invites!</p>
-      <% end %>
-      </div>
+      </ul>
       <ul class="menu-nav">
+        <% if @pending_invitations %>
+          <li class='invitations'><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i><a id='invitations-nav' class='invitations' href="/journeys/">You have invitations!</a></li>
+          <% end %>
          <li><a href="/">Explore</a></li>
          <li><a href="/journeys/new">Begin</a></li>
          <li><a href="/journeys/random">I'm feeling Adventurous</a></li>

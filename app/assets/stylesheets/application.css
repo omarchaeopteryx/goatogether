@@ -453,7 +453,12 @@ iframe{
 
 .invitations {
 
-    color: #f215b0;
+    color: #ff56ad;
+}
+
+a.invitations {
+
+ color: #ff56ad;
 }
 
 

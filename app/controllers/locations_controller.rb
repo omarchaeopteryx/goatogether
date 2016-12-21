@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
   def index
+    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
     @journey = Journey.new
     @allresults = []
     if current_user
