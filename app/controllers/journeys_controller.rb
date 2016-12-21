@@ -3,7 +3,7 @@ class JourneysController < ApplicationController
     @journey = Journey.new
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
-
+    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
     if request.xhr?
       render :index, layout: false
     else
@@ -40,6 +40,11 @@ class JourneysController < ApplicationController
         @guest.name = "guest"
         @guest.save
         @invite = Invite.create(journey_id: @journey.id, guest_id: @guest.id)
+
+        # Method for sending notification message via twitter:
+        @guest_handle = current_user.twitter.user(@guest.uid.to_i)
+        current_user.twitter.update("@#{@guest_handle.screen_name}: @#{@invite.journey.user.nickname} has invited you for a journey! Check it out at via @goatogether ! #goatogether")
+
       end
       if request.xhr?
         @upcoming_journeys = Journey.by(current_user).upcoming

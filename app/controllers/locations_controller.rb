@@ -1,10 +1,10 @@
 class LocationsController < ApplicationController
   def index
+    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
     @journey = Journey.new
     @allresults = []
     if current_user
       @allresults = []
-      # @allresults << filterGeoOnly(current_user.twitter)
       respond_to do |format|
         format.html
         format.json { render json: @allresults }

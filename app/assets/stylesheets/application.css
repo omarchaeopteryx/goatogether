@@ -251,7 +251,7 @@ label {
     margin-top: 20px;
 }
 
-.begin-form input{
+.begin-form input {
     border: none;
     border-bottom: 2px solid #BE6E46;
     width: 400px;
@@ -273,7 +273,7 @@ label {
     cursor: pointer;
 }
 
-#overlay{
+#overlay {
     display: none;
     position: fixed; /* Stay in place */
     z-index: 1000; /* Sit on top */
@@ -341,11 +341,11 @@ label {
     margin:0% 0 0 60%;
     z-index: 1001;
 }
-.btn-slide{
+.btn-slide {
     margin-right: 400px!important;
 }
 
-.menu-user2{
+.menu-user2 {
     margin-top: 500px;
 }
 
@@ -371,7 +371,7 @@ label {
     transition: .25s ease-in;
 }
 
-.nav2 a:hover  {
+.nav2 a:hover {
     background: rgba(255,255,255,.125);
 }
 
@@ -386,7 +386,7 @@ label {
     -ms-transition: .5s ease-in;
     transition: .5s ease-in;
 }
-.button-slide{
+.button-slide {
     margin-right: 93%;
 }
 
@@ -405,21 +405,21 @@ label {
     background: none;
 }
 
-.menuhide{
+.menuhide {
     padding: 0;
     box-shadow:0 0 50px 0 rgba(0,0,0,.5);
     width: 50%;
     margin:0% 0 0 100%;
 }
 
-iframe{
+iframe {
     display: flex;
     width: 75%;
     height: 300px;
     padding-left: 2.75%;
 }
 
-#map img{
+#map img {
     position: absolute;
     z-index: 99999;
 }
@@ -429,7 +429,7 @@ iframe{
 #over_map {
     position: absolute; top: 70%; left: 5%; z-index: 99;
 }
-#over_map img{
+#over_map img {
     width: 200px; height: auto;
     opacity: .83;
 }
@@ -471,6 +471,14 @@ iframe{
     font-size: 30px;
     font-weight: normal;
     line-height: 20px;
+}
+
+.invitations {
+    color: #ff56ad;
+}
+
+a.invitations {
+    color: #ff56ad;
 }
 
 .fa-twitter {

@@ -300,4 +300,18 @@ $(document).ready(function(){
     })
   })
 
+  // Click Notices, slide out Journey index
+  $('#invitations-nav').on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/journeys',
+      method: "GET",
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
 })
