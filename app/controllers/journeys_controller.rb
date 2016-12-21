@@ -71,17 +71,10 @@ class JourneysController < ApplicationController
   end
 
   def random
-    journeys = Journey.where('user_id != ?', current_user.id)
-    random_journey = []
-    journeys.each do |journey|
-      journey.invites.each do |invite|
-        if invite.guest_id != current_user.id
-          random_journey << journey
-        end
-      end
-    end
-    journey_count = random_journey.count
-    @journey = random_journey[rand(0..(journey_count-1))]
+    journey_count = get_journeys_user_is_not_apart_of.count
+    @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
+    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+    get_tweets_from_within_timeline(@result)
     render :show
   end
 
@@ -94,6 +87,29 @@ private
   # takes the friends param and breaks it up into individual people
   def friends
     params[:friends][:guest_id].split(", ")
+  end
+
+  def get_journeys_user_is_not_apart_of
+    journeys = Journey.where('user_id != ?', current_user.id)
+    random_journeys = []
+    journeys.each do |journey|
+      if journey.invites.empty?
+        random_journeys << journey
+      else
+        journey.invites.each do |invite|
+          if invite.guest_id != current_user.id
+            random_journeys << journey
+          end
+        end
+      end
+    end
+    return random_journeys
+  end
+
+  def get_tweets_from_within_timeline(array)
+    array.select! do |result|
+      result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
+    end
   end
 
 
