@@ -21,7 +21,15 @@ class JourneysController < ApplicationController
 
   def search
    search = params[:search]
+  #this is for the search functionality
    @users = twitter_search(current_user.twitter, search)
+
+  #this will generate random pins for the map
+    # @users = []
+    # 50.times do
+    #   @users << create_random_tweet
+    # end
+
 
    if request.xhr?
     render :json => @users
@@ -98,14 +106,14 @@ private
   end
 
 
-  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=5)
+  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=1)
     search_term = search_term.to_s
     if results.length >= pins
       results.slice!(pins..-1)
       return results
     else
 
-      results2 =  current_user.twitter.search(search_term, geocode:"32,-117,100mi", max_id: max_id).take(10).to_a
+      results2 =  current_user.twitter.search(search_term, geocode:"32,-117,100mi", max_id: max_id).take(5).to_a
       results = results.concat(results2)
       max_id = results.last.id
 
@@ -113,6 +121,18 @@ private
       twitter_search(twitter_client,search_term, max_id, results)
     end
   end
+
+   def range (min, max)
+    rand * (max-min) + min
+   end
+
+   def create_random_tweet
+    {
+    'coordinates': {'coordinates': [range(-80,-124),range(18,49)]},
+    'text': Faker::Hipster.sentences(1).first,
+    'name': Faker::Name.name
+   }
+   end
 
   def journey_params
     params.require(:journey).permit(:name, :hashtag, :start_time, :end_time, :user_id)

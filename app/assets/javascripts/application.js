@@ -73,7 +73,7 @@ function initialize() {
       "elementType": "labels.text.stroke",
       "stylers": [{"color": "#ABCE83"}]},
       {"featureType": "road",
-      "elementType": "labels.icon",
+      // "elementType": "labels.icon",
       "stylers": [{"visibility": "off"}]},
       {"featureType": "road.highway",
       "elementType": "geometry",
@@ -143,16 +143,11 @@ $(document).ready(function(){
   })
   .done(function(response){
     var tweetResponse = response;
-    var icons = {
-      parking: {
-        icon: 'http://pngimg.com/upload/bear_PNG1191.png'
-      }
-    };
 
     function addMarker(lat, long) {
+      console.log('AAAAAAAAAHHHHHHH')
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
-        // icon: icons['parking'].icon,
         map: map
       });
       locations.push(['Test', lat, long, 4])
@@ -177,12 +172,10 @@ $(document).ready(function(){
 
 
     function createLocationPage(newLat, newLong, element1){
-      console.log(element1)
-        var currentMarker = $(this);
+        console.log('Start of create pin');
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
-
-        $('.nav-2-location-contents').removeClass('hide')
+        $('.nav-2-location-contents').removeClass('hide');
         $(".nav2").addClass("menushow2");
         $(".menu-btn2").addClass("button-slide");
         $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());
@@ -197,6 +190,7 @@ $(document).ready(function(){
         $('.tweet-description').text("@" + element1.user.screen_name + " says: " + element1.text)
         $('.place-coordinates').text("\n From lat: " + newLat + "\n long: " + newLong)
       });
+        console.log('added pin')
     }
 
       //the tweet response is an array of arrays, each containing tweet object
