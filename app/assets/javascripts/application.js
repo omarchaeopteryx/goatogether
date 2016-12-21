@@ -222,17 +222,18 @@ $(document).ready(function(){
     $('.loader').show()
     var data = $('.search-form').serialize();
     $.get('/journeys/search', data)
-    .done(function(response){
-      response.forEach(function(element, elementIndex1) {
-          if(element.coordinates){
-            var latitude = element.coordinates.coordinates[1];
-            var longitude = element.coordinates.coordinates[0];
-            createLocationPage(latitude, longitude, element)
-          }else if(element.place){
-            var latitude = element.place.bounding_box.coordinates[0][1][1];
-            var longitude = element.place.bounding_box.coordinates[0][1][0];
-            createLocationPage(latitude, longitude, element)}
-       });
+      .done(function(response){
+        response.forEach(function(element, elementIndex1) {
+            if(element.coordinates){
+              var latitude = element.coordinates.coordinates[1];
+              var longitude = element.coordinates.coordinates[0];
+              createLocationPage(latitude, longitude, element)
+            }else if(element.place){
+              var latitude = element.place.bounding_box.coordinates[0][1][1];
+              var longitude = element.place.bounding_box.coordinates[0][1][0];
+              createLocationPage(latitude, longitude, element)
+            }
+        });
       $('.loader').hide();
     })
   })
@@ -291,6 +292,20 @@ $(document).ready(function(){
     $.ajax({
       url: '/journeys',
       method: "GET",
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
+  $('body').on('click', '.journeylink', function(e){
+    e.preventDefault();
+    console.log("click")
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
     })
     .done(function(response){
       $(".nav1").removeClass("menushow");

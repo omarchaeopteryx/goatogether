@@ -2,7 +2,7 @@
 <% if @pending_invitations %>
   <h2 class='invitations'>Your Invitations</h2><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
   <% @pending_invitations.each do |invite| %>
-  <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
+  <h3 class='invitations'><a class='journeylink' href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
   <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></p>
    <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></p>
   <% end %>
@@ -11,7 +11,7 @@
 <% if @upcoming_journeys %>
   <h2>Upcoming Journeys</h2>
   <% @upcoming_journeys.each do |journey| %>
-  <h3><a href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
+  <h3 ><a class='journeylink' href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
   <p><%= format_time(journey.start_time) %> - <%= format_time(journey.end_time) %></p>
   <% end %>
 <% end %>
@@ -19,7 +19,7 @@
 <% if @previous_journeys %>
   <h2>Previous Journeys</h2>
   <% @previous_journeys.each do |journey| %>
-  <h3><a href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
+  <h3 ><a class='journeylink' href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
   <p><%= format_time(journey.start_time) %> - <%= format_time(journey.end_time) %></p>
   <% end %>
 <% end %>
