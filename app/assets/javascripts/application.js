@@ -162,6 +162,7 @@ $(document).ready(function(){
     $(".menu-btn").click(function(event){
       event.preventDefault();
       $(".nav1").toggleClass("menushow");
+
     });
 
 
@@ -180,7 +181,7 @@ $(document).ready(function(){
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
 
-
+        $('.nav-2-location-contents').removeClass('hide')
         $(".nav2").addClass("menushow2");
         $(".menu-btn2").addClass("button-slide");
         $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());
@@ -199,7 +200,7 @@ $(document).ready(function(){
 
       //the tweet response is an array of arrays, each containing tweet object
       //the code below iterates through the tweet response array, and the contained sub arrays
-      //for each tweet object it pulls the longitude and latitude depending on where theyre store
+      //for each tweet object it pulls the longitude and latitude depending on where they're stored
       //it then creates a map marker for each one
       tweetResponse.forEach(function(element, elementIndex){
         element.forEach(function(element1, elementIndex1) {
@@ -215,8 +216,27 @@ $(document).ready(function(){
           }else{
           }
         });
-      })
   })
+
+   $('.search-form').on('submit', function(event){
+    event.preventDefault();
+    var data = $('.search-form').serialize();
+    $.get('/journeys/search', data).done(function(response){
+      response.forEach(function(element, elementIndex1) {
+          if(element.coordinates){
+            var latitude = element.coordinates.coordinates[1];
+            var longitude = element.coordinates.coordinates[0];
+            createLocationPage(latitude, longitude, element)
+          }else if(element.place){
+            var latitude = element.place.bounding_box.coordinates[0][1][1];
+            var longitude = element.place.bounding_box.coordinates[0][1][0];
+            createLocationPage(latitude, longitude, element)}
+       });
+    })
+  })
+
+})
+
 
   $(".menu-btn1").click(function(event){
     event.preventDefault();
@@ -227,6 +247,15 @@ $(document).ready(function(){
     event.preventDefault();
     $(".nav2").removeClass("menushow2");
   });
+
+
+  $(".menu-nav li").first().css('background-color', '#5f846c');
+  $(".menu-nav li").click(function(event){
+    event.preventDefault();
+    $(this).siblings().css('background-color', '#719E81');
+    $(this).css('background-color', '#5f846c');
+  });
+
 
 // Begin pop up modal
   $("a[href='/journeys/new']").on('click', function(e){

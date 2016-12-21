@@ -23,7 +23,7 @@ body {
 }
 
 #map {
-  height: 1200px;
+  height: 1000px;
   width: 100%;
 }
 
@@ -436,7 +436,20 @@ iframe{
     font-size: 60px;
 }
 
-
+#map img{
+    position: absolute;
+    z-index: 99999;
+}
+#wrapper {
+    position: relative;
+}
+#over_map {
+    position: absolute; top: 70%; left: 5%; z-index: 99;
+}
+#over_map img{
+    width: 200px; height: auto;
+    opacity: .83;
+}
 
 
 

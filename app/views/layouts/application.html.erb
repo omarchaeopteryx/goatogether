@@ -11,14 +11,16 @@
     type="text/javascript"></script>
   </head>
   <body>
-    <div class="logo">
-      <h1><a href="/">龴⊙,,⊙龴 goatogether</a></h1>
-    </div>
-    <div class ="search">
-      <form action="/journeys/search" method="get">
-        <input type="text" name="search" placeholder="search for location, user, or hashtag"><i class="fa fa-search" aria-hidden="true"></i>
-      </form>
-    </div>
+
+  <div class="logo">
+    <h1><a href="/">龴⊙,,⊙龴 goatogether</a></h1>
+  </div>
+  <div class ="search">
+    <form class="search-form" action="/journeys/search" method="get">
+      <input class="search-input" type="text" name="search" placeholder="search for location, user, or hashtag"><i class="fa fa-search" aria-hidden="true"></i>
+    </form>
+  </div>
+
     <nav class='nav1'>
       <div class="menu-btn">
         <a href="#">+</a>
@@ -47,6 +49,7 @@
   <div id="overlay">
     <%= render "journeys/new" %>
   </div>
+
 
   <article>
     <%= yield %>
