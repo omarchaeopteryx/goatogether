@@ -5,6 +5,22 @@
     frameborder="0" style="border:0"
     src="https://www.google.com/maps/embed/v1/streetview?key=<%=ENV['GOOGLE_API_KEY']%>&location=33.00584797,-117.00582499">
   </iframe>
-  <h3 class='tweet-description'></h3>
-  <p class='place-coordinates'></p>
+  <div class='tweet-details'>
+    <div class='tweet-user'>
+      <div class="tweet-user-left">
+        <div id="twitter-avatar"></div>
+        <div class="tweet-name-username">
+          <div id="twitter-name"></div>
+          <div id="twitter-username"></div>
+        </div>
+      </div>
+      <div class="tweet-user-right">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </div>
+    </div>
+    <div class='tweet-content'>
+      <div id="twitter-text"></div>
+      <div id="twitter-date"></div>
+    </div>
+  </div>
 </div>

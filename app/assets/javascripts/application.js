@@ -175,9 +175,9 @@ $(document).ready(function(){
           return marker
         }
 
-
+    // Marker is clicked, slide out slidey
     function createLocationPage(newLat, newLong, element1){
-      console.log("tweet objects: " + element1)
+      console.log(element1)
         var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
           $.ajax({
@@ -189,11 +189,14 @@ $(document).ready(function(){
             $('#slideout').html(response)
             newGoogleMapsDestinationTemplate = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ&location="+newLat+","+newLong;
 
-            $("iframe").attr('src', newGoogleMapsDestinationTemplate); // Replace old with the new.
-            // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
-            $('.tweet-description').text("@" + element1.user.screen_name + " says: " + element1.text)
-            $('.place-coordinates').text("\n From lat: " + newLat + "\n long: " + newLong)
-          })
+            $("iframe").attr('src', newGoogleMapsDestinationTemplate);
+            // // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
+            $('#twitter-avatar').html("<img src=" + element1.user.profile_image_url + "/>");
+            $('#twitter-name').text(element1.user.name);
+            $('#twitter-username').text("@" + element1.user.screen_name);
+            $('#twitter-text').text(element1.text);
+            $('#twitter-date').text(element1.created_at);
+          });
       });
     }
 
