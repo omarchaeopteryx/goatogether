@@ -163,6 +163,7 @@ $(document).ready(function(){
     $(".menu-btn").click(function(event){
       event.preventDefault();
       $(".nav1").toggleClass("menushow");
+
     });
 
 
@@ -177,7 +178,7 @@ $(document).ready(function(){
 
 
     function createLocationPage(newLat, newLong, element1){
-         var currentMarker = $(this);
+        var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
 
@@ -200,7 +201,7 @@ $(document).ready(function(){
 
       //the tweet response is an array of arrays, each containing tweet object
       //the code below iterates through the tweet response array, and the contained sub arrays
-      //for each tweet object it pulls the longitude and latitude depending on where theyre store
+      //for each tweet object it pulls the longitude and latitude depending on where they're stored
       //it then creates a map marker for each one
       tweetResponse.forEach(function(element, elementIndex){
         element.forEach(function(element1, elementIndex1) {
@@ -249,6 +250,12 @@ $(document).ready(function(){
     $(".nav2").removeClass("menushow2");
   });
 
+  $(".menu-nav li").first().css('background-color', '#5f846c');
+  $(".menu-nav li").click(function(event){
+    event.preventDefault();
+    $(this).siblings().css('background-color', '#719E81');
+    $(this).css('background-color', '#5f846c');
+  });
 
 
 // Begin pop up modal
