@@ -273,7 +273,10 @@ $(document).ready(function(){
     $.ajax({
     url: '/journeys',
     method: "POST",
-    data: $('form#new_journey').serialize()
+    data: $('form#new_journey').serialize(),
+    error: function(data){
+        $('.errors').html('<p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Please enter a valid twitter user as your friend</p>');
+        }
   })
     .done(function(response){
       $('div#overlay').hide();

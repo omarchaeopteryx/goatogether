@@ -451,6 +451,9 @@ iframe{
     opacity: .83;
 }
 
-
+.errors p {
+    padding: 10px 0 0 10px;
+    color: #CC5A71;
+}
 
 
