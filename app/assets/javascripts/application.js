@@ -12,13 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 var newGoogleMapsDestinationTemplate;
 var currentLocation;
 function initialize() {
   navigator.geolocation.getCurrentPosition(function(position){
-  currentLocation = ['Youre Current Location', position.coords.latitude, position.coords.longitude, 4]
+  currentLocation = ['Your Current Location', position.coords.latitude, position.coords.longitude, 4]
   locations = [currentLocation];
 
   window.map = new google.maps.Map(document.getElementById('map'), {
@@ -177,7 +176,7 @@ $(document).ready(function(){
 
 
     function createLocationPage(newLat, newLong, element1){
-         var currentMarker = $(this);
+        var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
 
@@ -216,10 +215,8 @@ $(document).ready(function(){
           }else{
           }
         });
-    })
-})
-
-
+      })
+  })
 
   $(".menu-btn1").click(function(event){
     event.preventDefault();
@@ -231,14 +228,42 @@ $(document).ready(function(){
     $(".nav2").removeClass("menushow2");
   });
 
-
-
 // Begin pop up modal
   $("a[href='/journeys/new']").on('click', function(e){
     e.preventDefault();
-    $('div#overlay').css('display', 'block');
+    $('div#overlay').show();
     $('.close').on('click', function(){
-      $('div#overlay').css('display', 'none');
+      $('div#overlay').hide();
     })
   })
+
+  // Pull up Journeys index once form is submitted
+  $('input[value="Let\'s Go!"]').on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+    url: '/journeys',
+    method: "POST",
+    data: $('form#new_journey').serialize()
+  })
+    .done(function(response){
+      $('div#overlay').hide();
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    });
+  });
+
+  // Click User, slide out Journey index
+  $('#user-profile').on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/journeys',
+      method: "GET",
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
 })
