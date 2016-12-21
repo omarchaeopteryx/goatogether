@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/sessions/logout', to: 'sessions#logout'
-  get '/journeys/search', to:'journeys#search'
   get '/journeys/random', to:'journeys#random'
+  get '/journeys/search', to:'journeys#search'
+  get 'journeys/:journey_id', to: 'journeys#show'
   resources :users
   resource :post
   get '/inst/tags', to: 'posts#index'

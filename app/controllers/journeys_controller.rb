@@ -2,7 +2,7 @@ class JourneysController < ApplicationController
   def index
     @journey = Journey.new
     @journeys = users_journeys
-    redirect_to '/'
+    # redirect_to '/'
   end
 
   def new
@@ -42,7 +42,13 @@ class JourneysController < ApplicationController
   end
 
   def show
-    # render :_journey_show
+    @journey = Journey.find(params[:journey_id])
+    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+    @result.select! do |result|
+      p result.created_at
+      result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
+    end
+    render :show
   end
 
   def random
@@ -69,6 +75,20 @@ private
   # takes the friends param and breaks it up into individual people
   def friends
     params[:friends][:guest_id].split(", ")
+  end
+
+   def journey_search(twitter_client, user, hashtag, start_time, end_time, max_id=nil, results=[], pins=1)
+    if results.length >= pins
+      results.slice!(pins..-1)
+      return results
+    else
+      results2 = twitter_client.search("#{user} #{hashtag}", max_id: max_id).take(3).to_a
+      results.concat(results2)
+      p results
+      max_id = results.last.id
+      results.select!{|tweet| tweet.geo? }
+      journey_search(twitter_client, hashtag, start_time, end_time, max_id, results)
+    end
   end
 
   def journey_params
