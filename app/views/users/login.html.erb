@@ -8,22 +8,26 @@
 </div>
 
 <div id='login-page'>
+  <div class="login-background"><%= image_tag("login_goat") %></div>
   <div class="login-interior">
     <h1>Welcome to goatogether!</h1>
     <p>goatogether uses twitter authentication to log you in and map your tweets.</p>
-    <ul class="twitter-permissions">
-      <li>Read Tweets from your timeline.</li>
-      <li>See who you follow, and follow new people.</li>
-      <li>Update your profile.</li>
-      <li>Post Tweets for you.</li>
-    </ul>
-
-    <div class="twitter-login">
-      <form action="/auth/twitter" method="get">
-        <button id='twitter-login-button' type='submit'><i class="fa fa-twitter" aria-hidden="true"></i> Sign in with Twitter</button>
-      </form>
-      <span>Don't have a twitter account?</span>
-      <a href="https://twitter.com/signup?lang=en">Join Twitter</a>
+    <div class="login-twitter-details">
+      <div class="twitter-permissions">
+        <ul>
+          <li>Read Tweets from your timeline.</li>
+          <li>See who you follow, and follow new people.</li>
+          <li>Update your profile.</li>
+          <li>Post Tweets for you.</li>
+        </ul>
+      </div>
+      <div class="twitter-login">
+        <form action="/auth/twitter" method="get">
+          <button id='twitter-login-button' type='submit'><i class="fa fa-twitter" aria-hidden="true"></i> Sign in with Twitter</button>
+        </form>
+        <span>Don't have a twitter account?</span>
+        <a href="https://twitter.com/signup?lang=en">Join Twitter</a>
+      </div>
     </div>
   </div>
 </div>

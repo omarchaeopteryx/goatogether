@@ -30,30 +30,46 @@ body {
 #login-page {
     background-color: #1DA1F2;
     background: linear-gradient(to bottom right,#689E7B, #46ACC2);
-    height: 100%;
+    width: 55%;
     padding: 50px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
 .login-interior {
     background-color: white;
-    border-radius: 5px;
-    width: 50%;
-    height: 40%;
-    padding: 50px;
+    border-radius: 0 0 5px 5px;
+    padding: 30px 50px;
     text-align: center;
     position: relative;
-    margin-top: 30px;
+    margin-top: 0;
+}
+
+.login-interior h1 {
+    font-size: 40px;
+}
+
+.login-background img {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px 5px 0 0;
+}
+
+.login-twitter-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 30px 0;
 }
 
 .twitter-login {
-    bottom: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    position: absolute;
+    order: 1;
+    align-self: center;
+}
+
+button > .fa-twitter {
+    color: white;
 }
 
 #twitter-login-button {
@@ -68,10 +84,8 @@ body {
 }
 
 .twitter-permissions {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin: 20px;
+    align-self: center;
+    order: 2;
 }
 
 .twitter-permissions li {
