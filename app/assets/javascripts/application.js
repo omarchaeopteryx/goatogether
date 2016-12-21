@@ -256,5 +256,18 @@ $(document).ready(function(){
     });
   });
 
+  // Click User, slide out /journeys
+  $('#user-profile').on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/journeys',
+      method: "GET",
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
 
 })

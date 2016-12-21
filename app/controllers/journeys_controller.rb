@@ -3,8 +3,11 @@ class JourneysController < ApplicationController
     @journey = Journey.new
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
-    respond_to do |format|
-       format.html { render :'index' }
+
+    if request.xhr?
+      render :index, layout: false
+    else
+      render :'index'
     end
   end
 
@@ -19,7 +22,6 @@ class JourneysController < ApplicationController
   def search
    search = params[:search]
    @users = User.where('lower(name) ~* ?', "[#{search.downcase}]")
-   p @users
    render :_search
   end
 
