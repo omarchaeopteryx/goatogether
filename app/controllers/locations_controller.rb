@@ -1,6 +1,5 @@
 class LocationsController < ApplicationController
   def index
-
     @journey = Journey.new
     @allresults = []
     if current_user
@@ -13,8 +12,6 @@ class LocationsController < ApplicationController
     else
       render 'users/login', layout: false
     end
-
-
   end
 
   def edit

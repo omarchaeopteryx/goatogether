@@ -14,20 +14,19 @@ class JourneysController < ApplicationController
   def new
     @journey = Journey.new
     respond_to do |format|
-     format.html { render :_new }
-     format.json
+      format.html { render :_new }
+      format.json
     end
   end
 
   def search
-   search = params[:search]
-   @users = twitter_search(current_user.twitter, search)
-
-   if request.xhr?
-    render :json => @users
-   else
-    render :_search
-   end
+    search = params[:search]
+    @users = twitter_search(current_user.twitter, search)
+    if request.xhr?
+      render :json => @users
+    else
+      render :_search
+    end
   end
 
   def create
@@ -50,13 +49,11 @@ class JourneysController < ApplicationController
       if request.xhr?
         @upcoming_journeys = Journey.by(current_user).upcoming
         @previous_journeys = Journey.by(current_user).previous
+        @errors = @journey.errors.full_messages
         render :index, layout: false
       end
     else
-      @journey.errors.full_messages
-      respond_to do |format|
-        format.html { redirect_to "/users/#{current_user.id}" }
-      end
+      @errors = @journey.errors.full_messages
     end
   end
 
@@ -64,7 +61,6 @@ class JourneysController < ApplicationController
     @journey = Journey.find(params[:journey_id])
     @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
-      p result.created_at
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
     render :show
