@@ -113,6 +113,8 @@ function initialize() {
       map: map
     });
 
+    $(".loader").hide();
+
     bounds.extend(marker.position);
 
     google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -135,7 +137,6 @@ function initialize() {
 
 
 $(document).ready(function(){
-
   $.ajax({
     url: '/',
     method: "GET",
@@ -221,6 +222,7 @@ $(document).ready(function(){
 
    $('.search-form').on('submit', function(event){
     event.preventDefault();
+    $('.loader').show()
     var data = $('.search-form').serialize();
     $.get('/journeys/search', data).done(function(response){
       response.forEach(function(element, elementIndex1) {
@@ -233,6 +235,7 @@ $(document).ready(function(){
             var longitude = element.place.bounding_box.coordinates[0][1][0];
             createLocationPage(latitude, longitude, element)}
        });
+      $('.loader').hide();
     })
   })
 
