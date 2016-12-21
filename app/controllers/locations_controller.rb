@@ -3,7 +3,7 @@ class LocationsController < ApplicationController
     @journey = Journey.new
     @allresults = []
     if current_user
-    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
+      @pending_invitations = Invite.where("guest_id = ?", current_user.id)
       @allresults = []
       respond_to do |format|
         format.html
