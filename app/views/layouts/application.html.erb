@@ -27,7 +27,7 @@
       </div>
       </ul>
       <ul class="menu-nav">
-        <% if @pending_invitations %>
+        <% unless @pending_invitations.empty? %>
           <li class='invitations'><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i><a id='invitations-nav' class='invitations' href="/journeys/">You have invitations!</a></li>
           <% end %>
          <li><a href="/">Explore</a></li>

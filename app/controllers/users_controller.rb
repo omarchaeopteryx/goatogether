@@ -15,11 +15,14 @@ class UsersController <  ApplicationController
   end
 
   def index
-
+    if current_user
+        @pending_invitations = Invite.where("guest_id = ?", current_user.id)
+    end
   end
 
   def show
     if current_user
+      @pending_invitations = Invite.where("guest_id = ?", current_user.id)
       @journey = find_journey
       render :show
     else

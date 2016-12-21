@@ -62,6 +62,7 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.find(params[:journey_id])
+    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
     @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
       p result.created_at

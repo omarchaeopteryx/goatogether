@@ -1,5 +1,5 @@
 <h1><%= current_user.name %></h1>
-<% if @pending_invitations %>
+<% unless @pending_invitations.empty? %>
   <h2 class='invitations'>Your Invitations</h2><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
   <% @pending_invitations.each do |invite| %>
   <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
