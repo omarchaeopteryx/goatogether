@@ -1,20 +1,40 @@
 class JourneysController < ApplicationController
   def index
     @journey = Journey.new
+<<<<<<< HEAD
     @journeys = users_journeys
     # redirect_to '/'
+=======
+    @upcoming_journeys = Journey.by(current_user).upcoming
+    @previous_journeys = Journey.by(current_user).previous
+
+    if request.xhr?
+      render :index, layout: false
+    else
+      render :'index'
+    end
+>>>>>>> 701f155c96dee50722f631c00cd942ea928dba8d
   end
 
   def new
     @journey = Journey.new
-    render :_new
+    respond_to do |format|
+     format.html { render :_new }
+     format.json
+    end
   end
 
   def search
    search = params[:search]
-   @users = User.where('lower(name) ~* ?', "[#{search.downcase}]")
-   p @users
-   render :_search
+
+   @users = twitter_search(current_user.twitter, search)
+
+   if request.xhr?
+    render :json => @users
+   else
+    render :_search
+   end
+
   end
   def create
     @journey = Journey.new(journey_params)
@@ -26,12 +46,12 @@ class JourneysController < ApplicationController
         @guest.provider = "twitter"
         @guest.name = "guest"
         @guest.save
-        @invite = Invite.new(journey_id: @journey.id, guest_id: @guest.id)
-        @invite.save
-        p "invite.id: #{@invite.id}, invite.guest_id: #{@invite.guest_id}, invite.journey_id: #{@invite.journey_id}"
+        @invite = Invite.create(journey_id: @journey.id, guest_id: @guest.id)
       end
-      respond_to do |format|
-       format.html {redirect_to journeys_path}
+      if request.xhr?
+        @upcoming_journeys = Journey.by(current_user).upcoming
+        @previous_journeys = Journey.by(current_user).previous
+        render :index, layout: false
       end
     else
       @journey.errors.full_messages
@@ -77,17 +97,29 @@ private
     params[:friends][:guest_id].split(", ")
   end
 
-   def journey_search(twitter_client, user, hashtag, start_time, end_time, max_id=nil, results=[], pins=1)
+
+  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=5)
+    search_term = search_term.to_s
     if results.length >= pins
       results.slice!(pins..-1)
       return results
     else
+
       results2 = twitter_client.search("#{user} #{hashtag}", max_id: max_id).take(3).to_a
       results.concat(results2)
       p results
       max_id = results.last.id
       results.select!{|tweet| tweet.geo? }
       journey_search(twitter_client, hashtag, start_time, end_time, max_id, results)
+
+
+      results2 =  current_user.twitter.search(search_term, geocode:"32,-117,100mi", max_id: max_id).take(10).to_a
+      results = results.concat(results2)
+      max_id = results.last.id
+
+      results.select!{|tweet| tweet.geo? }
+      twitter_search(twitter_client,search_term, max_id, results)
+
     end
   end
 
@@ -105,9 +137,5 @@ private
 
   def find_journey
     Journey.find_by(id: params[:id])
-  end
-
-  def users_journeys
-    Journey.where(user_id: session[:user_id])
   end
 end
