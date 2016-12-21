@@ -176,7 +176,7 @@ $(document).ready(function(){
 
 
     function createLocationPage(newLat, newLong, element1){
-         var currentMarker = $(this);
+        var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
 
@@ -215,10 +215,8 @@ $(document).ready(function(){
           }else{
           }
         });
-    })
-})
-
-
+      })
+  })
 
   $(".menu-btn1").click(function(event){
     event.preventDefault();
@@ -229,8 +227,6 @@ $(document).ready(function(){
     event.preventDefault();
     $(".nav2").removeClass("menushow2");
   });
-
-
 
 // Begin pop up modal
   $("a[href='/journeys/new']").on('click', function(e){
