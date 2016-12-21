@@ -196,6 +196,7 @@ $(document).ready(function(){
             $('#twitter-username').text("@" + element1.user.screen_name);
             $('#twitter-text').text(element1.text);
             $('#twitter-date').text(element1.created_at);
+            $('#twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
           });
       });
     }
@@ -223,7 +224,8 @@ $(document).ready(function(){
    $('.search-form').on('submit', function(event){
     event.preventDefault();
     var data = $('.search-form').serialize();
-    $.get('/journeys/search', data).done(function(response){
+    $.get('/journeys/search', data)
+    .done(function(response){
       response.forEach(function(element, elementIndex1) {
           if(element.coordinates){
             var latitude = element.coordinates.coordinates[1];

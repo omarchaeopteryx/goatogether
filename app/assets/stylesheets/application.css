@@ -465,12 +465,12 @@ iframe {
 .tweet-name-username {
     display: flex;
     flex-direction: column;
+    padding-left: 10px;
 }
 
 #twitter-text {
     font-size: 30px;
     font-weight: normal;
-    line-height: 20px;
 }
 
 .invitations {
@@ -483,5 +483,6 @@ a.invitations {
 
 .fa-twitter {
     color: #55ACEE;
+    font-size: 25px;
 }
 

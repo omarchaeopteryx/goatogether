@@ -61,7 +61,6 @@ class JourneysController < ApplicationController
     @journey = Journey.find(params[:journey_id])
     @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
-      p result.created_at
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
     render :show
