@@ -6,7 +6,7 @@
     <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
       <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></li>
       <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></li>
-      <form class="invite-response-form" action='/invites/<%= invite.id%>' method="post"><button class='invite-response-button'><i class="fa fa-check-circle-o">Yes</button></i><button class='invite-response-button'><i class="fa fa-times-circle">No</button></i></form>
+      <form class="invite-response-form" action='/invites/<%= invite.id%>' method="put"><button class='invite-response-button' alt='Yes'><i class="fa fa-check-circle-o">Yes</button></i><button class='invite-response-button' alt='No'><i class="fa fa-times-circle">No</button></i></form>
   <% end %>
 
 <% end %>
