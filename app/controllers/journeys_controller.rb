@@ -21,7 +21,6 @@ class JourneysController < ApplicationController
 
   def search
    search = params[:search]
-
    @users = twitter_search(current_user.twitter, search)
 
    if request.xhr?
