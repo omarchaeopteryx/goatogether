@@ -256,7 +256,7 @@ $(document).ready(function(){
     });
   });
 
-  // Click User, slide out /journeys
+  // Click User, slide out Journey index
   $('#user-profile').on('click', function(e){
     e.preventDefault();
     $.ajax({
