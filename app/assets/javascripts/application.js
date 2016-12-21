@@ -12,13 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 var newGoogleMapsDestinationTemplate;
 var currentLocation;
 function initialize() {
   navigator.geolocation.getCurrentPosition(function(position){
-  currentLocation = ['Youre Current Location', position.coords.latitude, position.coords.longitude, 4]
+  currentLocation = ['Your Current Location', position.coords.latitude, position.coords.longitude, 4]
   locations = [currentLocation];
 
   window.map = new google.maps.Map(document.getElementById('map'), {
@@ -241,4 +240,18 @@ $(document).ready(function(){
       $('div#overlay').css('display', 'none');
     })
   })
+
+  // Pull up Journeys index
+  $('input[value="Let\'s Go!"]').on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+    url: '/journeys',
+    method: "POST",
+    data: $('form#new_journey').serialize()
+  })
+    .done(function(response){
+      $('div#overlay').hide();
+      console.log(response);
+    });
+  });
 })

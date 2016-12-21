@@ -2,12 +2,18 @@ class JourneysController < ApplicationController
   def index
     @journey = Journey.new
     @journeys = users_journeys
-    redirect_to '/'
+    respond_to do |format|
+       format.html { render :'index' }
+       format.json { render :'index' }
+    end
   end
 
   def new
     @journey = Journey.new
-    render :_new
+    respond_to do |format|
+     format.html { render :_new }
+     format.json
+    end
   end
 
   def search
@@ -27,12 +33,12 @@ class JourneysController < ApplicationController
         @guest.provider = "twitter"
         @guest.name = "guest"
         @guest.save
-        @invite = Invite.new(journey_id: @journey.id, guest_id: @guest.id)
-        @invite.save
-        p "invite.id: #{@invite.id}, invite.guest_id: #{@invite.guest_id}, invite.journey_id: #{@invite.journey_id}"
+        @invite = Invite.create(journey_id: @journey.id, guest_id: @guest.id)
       end
-      respond_to do |format|
-       format.html {redirect_to journeys_path}
+      if request.xhr?
+        @upcoming_journeys = Journey.by(current_user).upcoming
+        @previous_journeys = Journey.by(current_user).previous
+        render :index, layout: false
       end
     else
       @journey.errors.full_messages

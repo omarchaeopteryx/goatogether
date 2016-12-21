@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20161219225912) do
   create_table "journeys", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "name"
     t.integer  "user_id"
     t.string   "hashtag"
     t.datetime "start_time"
