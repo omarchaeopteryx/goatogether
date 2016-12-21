@@ -39,6 +39,7 @@ class JourneysController < ApplicationController
         @guest = User.find_or_initialize_by(uid: uid)
         @guest.provider = "twitter"
         @guest.name = "guest"
+        @guest.nickname = 'guest'
         @guest.save
         @invite = Invite.create(journey_id: @journey.id, guest_id: @guest.id)
 
@@ -81,7 +82,7 @@ class JourneysController < ApplicationController
       end
     end
     journey_count = random_journey.count
-    @journey = random_journey[rand(0..(journey_count-1))]
+    @result = random_journey[rand(0..(journey_count-1))]
     render :show
   end
 
