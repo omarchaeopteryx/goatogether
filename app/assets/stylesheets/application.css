@@ -419,7 +419,7 @@ iframe{
     padding-left: 2.75%;
 }
 
-.place-coordinates{
+/*.place-coordinates{
     margin-top: 50px;
     text-align: center;
     margin-right: 22%;
@@ -434,7 +434,7 @@ iframe{
     margin-left: 2%;
     font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
     font-size: 60px;
-}
+}*/
 
 #map img{
     position: absolute;

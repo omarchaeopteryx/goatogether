@@ -177,25 +177,23 @@ $(document).ready(function(){
 
 
     function createLocationPage(newLat, newLong, element1){
-      console.log(element1)
+      console.log("tweet objects: " + element1)
         var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
-        // Bringing out slider from the right (might need to make into function):
+          $.ajax({
+            url: "/posts/show",
+            method: "GET"
+          })
+          .done(function(response){
+            $(".nav2").addClass("menushow2");
+            $('#slideout').html(response)
+            newGoogleMapsDestinationTemplate = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ&location="+newLat+","+newLong;
 
-        $('.nav-2-location-contents').removeClass('hide')
-        $(".nav2").addClass("menushow2");
-        $(".menu-btn2").addClass("button-slide");
-        $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());
-        // NEW! Here is a series of steps that will make a new URL for google streetview...
-        var oldGoogleMapsDestination = $("iframe").attr('src');
-        var GOOGLE_API_KEY = "AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ"; // NEED to hide this.
-
-        newGoogleMapsDestinationTemplate = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ&location="+newLat+","+newLong;
-
-        $("iframe").attr('src', newGoogleMapsDestinationTemplate); // Replace old with the new.
-        // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
-        $('.tweet-description').text("@" + element1.user.screen_name + " says: " + element1.text)
-        $('.place-coordinates').text("\n From lat: " + newLat + "\n long: " + newLong)
+            $("iframe").attr('src', newGoogleMapsDestinationTemplate); // Replace old with the new.
+            // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
+            $('.tweet-description').text("@" + element1.user.screen_name + " says: " + element1.text)
+            $('.place-coordinates').text("\n From lat: " + newLat + "\n long: " + newLong)
+          })
       });
     }
 
