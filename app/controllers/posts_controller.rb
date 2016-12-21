@@ -22,4 +22,10 @@ class PostsController < ApplicationController
     render :index
   end
 
+  def show
+    if request.xhr?
+        render :show, layout: false
+    end
+  end
+
 end
