@@ -1,10 +1,6 @@
 class JourneysController < ApplicationController
   def index
     @journey = Journey.new
-<<<<<<< HEAD
-    @journeys = users_journeys
-    # redirect_to '/'
-=======
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
 
@@ -13,7 +9,6 @@ class JourneysController < ApplicationController
     else
       render :'index'
     end
->>>>>>> 701f155c96dee50722f631c00cd942ea928dba8d
   end
 
   def new
@@ -105,21 +100,12 @@ private
       return results
     else
 
-      results2 = twitter_client.search("#{user} #{hashtag}", max_id: max_id).take(3).to_a
-      results.concat(results2)
-      p results
-      max_id = results.last.id
-      results.select!{|tweet| tweet.geo? }
-      journey_search(twitter_client, hashtag, start_time, end_time, max_id, results)
-
-
       results2 =  current_user.twitter.search(search_term, geocode:"32,-117,100mi", max_id: max_id).take(10).to_a
       results = results.concat(results2)
       max_id = results.last.id
 
       results.select!{|tweet| tweet.geo? }
       twitter_search(twitter_client,search_term, max_id, results)
-
     end
   end
 

@@ -177,6 +177,7 @@ $(document).ready(function(){
 
 
     function createLocationPage(newLat, newLong, element1){
+      console.log(element1)
         var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
         // Bringing out slider from the right (might need to make into function):
