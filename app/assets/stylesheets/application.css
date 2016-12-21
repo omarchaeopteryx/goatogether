@@ -37,6 +37,19 @@ body {
     justify-content: center;
 }
 
+#login-page > .close {
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#login-page > .close:hover,
+#login-page > .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .login-interior {
     background-color: white;
     border-radius: 0 0 5px 5px;
