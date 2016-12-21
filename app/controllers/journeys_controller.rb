@@ -21,7 +21,12 @@ class JourneysController < ApplicationController
 
   def search
     search = params[:search]
-    @users = twitter_search(current_user.twitter, search)
+    @users = []
+    # @users = twitter_search(current_user.twitter, search)
+    50.times  do
+      @users << create_random_tweet
+    end
+
     if request.xhr?
       render :json => @users
     else
@@ -64,7 +69,9 @@ class JourneysController < ApplicationController
     @result.select! do |result|
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
-    render :show
+    if request.xhr?
+      render :show, layout: false
+    end
   end
 
   def random
