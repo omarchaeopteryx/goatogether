@@ -57,7 +57,13 @@ class JourneysController < ApplicationController
   end
 
   def show
-    # render :_journey_show
+    @journey = Journey.find(params[:journey_id])
+    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+    @result.select! do |result|
+      p result.created_at
+      result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
+    end
+    render :show
   end
 
   def random
@@ -85,6 +91,7 @@ private
   def friends
     params[:friends][:guest_id].split(", ")
   end
+
 
   def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=5)
     search_term = search_term.to_s

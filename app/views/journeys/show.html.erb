@@ -1,5 +1,8 @@
 <h2><%= @journey.name %></h2>
 <p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
+<p><%@result.each do |result|%></p>
+<%=result.text%>
+<%end%>
 
 
 <%
