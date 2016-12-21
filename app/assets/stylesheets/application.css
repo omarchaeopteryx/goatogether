@@ -451,6 +451,14 @@ iframe{
     opacity: .83;
 }
 
+.invitations {
 
+    color: #ff56ad;
+}
+
+a.invitations {
+
+ color: #ff56ad;
+}
 
 
