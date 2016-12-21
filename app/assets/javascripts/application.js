@@ -235,13 +235,13 @@ $(document).ready(function(){
 // Begin pop up modal
   $("a[href='/journeys/new']").on('click', function(e){
     e.preventDefault();
-    $('div#overlay').css('display', 'block');
+    $('div#overlay').show();
     $('.close').on('click', function(){
-      $('div#overlay').css('display', 'none');
+      $('div#overlay').hide();
     })
   })
 
-  // Pull up Journeys index
+  // Pull up Journeys index once form is submitted
   $('input[value="Let\'s Go!"]').on('click', function(e){
     e.preventDefault();
     $.ajax({
@@ -251,7 +251,10 @@ $(document).ready(function(){
   })
     .done(function(response){
       $('div#overlay').hide();
-      console.log(response);
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
     });
   });
+
+
 })

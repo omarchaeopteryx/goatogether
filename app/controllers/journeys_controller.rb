@@ -1,10 +1,10 @@
 class JourneysController < ApplicationController
   def index
     @journey = Journey.new
-    @journeys = users_journeys
+    @upcoming_journeys = Journey.by(current_user).upcoming
+    @previous_journeys = Journey.by(current_user).previous
     respond_to do |format|
        format.html { render :'index' }
-       format.json { render :'index' }
     end
   end
 
@@ -77,9 +77,5 @@ private
 
   def find_journey
     Journey.find_by(id: params[:id])
-  end
-
-  def users_journeys
-    Journey.where(user_id: session[:user_id])
   end
 end

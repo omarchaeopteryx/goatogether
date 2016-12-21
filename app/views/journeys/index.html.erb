@@ -14,3 +14,7 @@
   <p><%= format_time(journey.start_time) %> - <%= format_time(journey.end_time) %></p>
   <% end %>
 <% end %>
+
+<% if @upcoming_journeys.empty? && @previous_journeys.empty? %>
+<p>This user has not recorded any journeys</p>
+<% end %>
