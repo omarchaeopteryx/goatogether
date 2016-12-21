@@ -15,6 +15,7 @@
 //= require_tree .
 var newGoogleMapsDestinationTemplate;
 var currentLocation;
+var markers = [];
 function initialize() {
   navigator.geolocation.getCurrentPosition(function(position){
   currentLocation = ['Your Current Location', position.coords.latitude, position.coords.longitude, 4]
@@ -146,7 +147,6 @@ $(document).ready(function(){
     var tweetResponse = response;
 
     function addMarker(lat, long) {
-      console.log('AAAAAAAAAHHHHHHH')
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
         map: map
@@ -168,12 +168,12 @@ $(document).ready(function(){
             // icon: '',
             map: map
           });
+          markers.push(marker)
           return marker
         }
 
     // Marker is clicked, slide out slidey
     function createLocationPage(newLat, newLong, element1){
-        console.log('Start of create pin');
         addMarker(newLat,newLong).addListener('click', function() {
           $.ajax({
             url: "/posts/show",
@@ -194,7 +194,6 @@ $(document).ready(function(){
             $('#twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
           });
       });
-        console.log('added pin')
     }
 
       //the tweet response is an array of arrays, each containing tweet object
@@ -217,7 +216,10 @@ $(document).ready(function(){
         });
   })
 
+
+
    $('.search-form').on('submit', function(event){
+    markers.forEach(function(marker){ marker.setMap(null) });
     event.preventDefault();
     $('.loader').show()
     var data = $('.search-form').serialize();
