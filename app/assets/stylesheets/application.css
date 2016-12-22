@@ -548,7 +548,7 @@ a.invitations {
     left: 0;
     z-index: 1;
     display: absolute;
-    margin-bottom: 25%;
+    margin-bottom: 33%;
 }
 
 @keyframes spin {
@@ -560,4 +560,5 @@ a.invitations {
     color: #55ACEE;
     font-size: 25px;
 }
+
 
