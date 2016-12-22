@@ -1,5 +1,9 @@
-<h2><%= current_user.name %></h2>
-<h3>@<%= current_user.nickname %></h3>
+<div class="user-card">
+  <div class="twitter-avatar"></div>
+  <h2><%= current_user.name %></h2>
+  <div class="twitter-nickname">@<%= current_user.nickname %></div>
+</div>
+
 <% unless @pending_invitations && @pending_invitations.empty? %>
   <h2 class='invitations'>Pending Journeys</h2><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
 
@@ -45,6 +49,4 @@
   <% end %>
 <% end %>
 
-<% if @upcoming_journeys.empty? && @current_journeys.empty? && @previous_journeys.empty? %>
-<p>This user has not recorded any journeys</p>
-<% end %>
+

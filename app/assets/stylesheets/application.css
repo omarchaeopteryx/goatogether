@@ -27,7 +27,6 @@ body {
   width: 100%;
 }
 
-
 #login-blackout {
     display: none;
     position: fixed; /* Stay in place */
@@ -445,6 +444,7 @@ label {
     -ms-transition: .5s ease-in;
     transition: .5s ease-in;
 }
+
 .button-slide {
     margin-right: 93%;
 }
@@ -498,18 +498,17 @@ iframe {
     color: #CC5A71;
 }
 
-.tweet-details {
+.tweet-details, .user-card {
     background-color: white;
     border-radius: 5px;
     padding: 16px;
     margin: 25px;
-    margin-right: 187px;
     border: #ddd 1px solid;
     border-top-color: #eee;
     border-bottom-color: #bbb;
     font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
-    font-weight: bold;
     box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    width: 70%;
 }
 
 .tweet-user {
@@ -521,15 +520,28 @@ iframe {
 .tweet-user-left {
     display: flex
 }
+
 .tweet-name-username {
     display: flex;
     flex-direction: column;
     padding-left: 10px;
 }
 
+#twitter-name {
+    font-weight: bold;
+}
+
+#twitter-username {
+    color: #657786;
+}
+
 #twitter-text {
     font-size: 30px;
     font-weight: normal;
+}
+
+.twitter-avatar img {
+    border-radius: 5px;
 }
 
 .invitations {
@@ -590,4 +602,12 @@ a.invitations {
 
 #slideout h3 {
 
+}
+
+.user-card {
+    margin: 25px 0;
+}
+
+.twitter-nickname {
+    color: #657786;
 }

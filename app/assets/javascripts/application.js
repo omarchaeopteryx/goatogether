@@ -204,7 +204,7 @@ $(document).ready(function(){
 
             $("iframe").attr('src', newGoogleMapsDestinationTemplate);
             // // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
-            $('#twitter-avatar').html("<img src=" + element1.user.profile_image_url + "/>");
+            $('.twitter-avatar').html("<img src=" + element1.user.profile_image_url + "/>");
             $('#twitter-name').text(element1.user.name);
             $('#twitter-username').text("@" + element1.user.screen_name);
             $('#twitter-text').text(element1.text);
