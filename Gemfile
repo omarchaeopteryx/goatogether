@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'pry'
+gem 'rb-readline'
 gem 'instagram',  :git => 'git://github.com/Instagram/instagram-ruby-gem.git'
 # gem "faraday", "~> 0.8.9" # OM: Might be needed to fix insta gem
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
