@@ -80,7 +80,9 @@ class JourneysController < ApplicationController
     @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
     @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
     get_tweets_from_within_timeline(@result)
-    render :show
+    if request.xhr?
+      render :show, layout: false
+    end
   end
 
   def edit
