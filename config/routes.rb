@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/posts/show', to: 'posts#show'
   resources :locations
   resources :journeys
+  resources :invites
   root 'locations#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
