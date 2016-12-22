@@ -112,6 +112,7 @@ function initialize() {
   for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
       position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+      icon: '/assets/goat-pin.png',
       map: map
     });
 
@@ -152,15 +153,15 @@ $(document).ready(function(){
   .done(function(response){
     var tweetResponse = response;
 
-    function addMarker(lat, long) {
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, long),
-        icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
-        map: map
-      });
-      locations.push(['Test', lat, long, 4])
-      return marker
-    }
+    // function addMarker(lat, long) {
+    //   marker = new google.maps.Marker({
+    //     position: new google.maps.LatLng(lat, long),
+    //     icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
+    //     map: map
+    //   });
+    //   locations.push(['Test', lat, long, 4])
+    //   return marker
+    // }
 
     $(".menu-btn").click(function(event){
       event.preventDefault();
@@ -168,6 +169,7 @@ $(document).ready(function(){
     });
 
     icons = {
+      twitter: '/assets/twitter-pin.png',
       red: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
       blue: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
       green: 'http://maps.google.com/mapfiles/ms/micons/green-dot.png',
