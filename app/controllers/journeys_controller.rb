@@ -78,13 +78,17 @@ class JourneysController < ApplicationController
 
 
   def random
-    journey_count = get_journeys_user_is_not_apart_of.count
-    @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
-    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
-    get_tweets_from_within_timeline(@result)
-    if request.xhr?
-      render :show, layout: false
-    end
+      journey_count = get_journeys_user_is_not_apart_of.count
+      if journey_count == 0
+        render_404
+      else
+        @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
+        @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+        get_tweets_from_within_timeline(@result)
+        if request.xhr?
+          render :show, layout: false
+        end
+      end
   end
 
   def edit
@@ -105,6 +109,7 @@ private
  def render_404
   respond_to do |format|
     format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+    format.json { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
     format.xml  { head :not_found }
     format.any  { head :not_found }
     end

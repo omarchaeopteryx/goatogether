@@ -367,6 +367,10 @@ $(document).ready(function(){
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
     })
+    .fail(function(jqXHR, status, somethingElse){
+      console.log(status)
+      window.location = '/404'
+    })
   })
 
 
@@ -382,6 +386,7 @@ $(document).ready(function(){
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
     })
+
   })
 
 })
