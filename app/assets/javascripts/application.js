@@ -15,6 +15,8 @@
 //= require_tree .
 var newGoogleMapsDestinationTemplate;
 var currentLocation;
+var markers = [];
+var results;
 function initialize() {
   navigator.geolocation.getCurrentPosition(function(position){
   currentLocation = ['Your Current Location', position.coords.latitude, position.coords.longitude, 4]
@@ -153,6 +155,7 @@ $(document).ready(function(){
     function addMarker(lat, long) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
+        icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
         map: map
       });
       locations.push(['Test', lat, long, 4])
@@ -164,12 +167,23 @@ $(document).ready(function(){
       $(".nav1").toggleClass("menushow");
     });
 
+    icons = {
+      red: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
+      blue: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
+      green: 'http://maps.google.com/mapfiles/ms/micons/green-dot.png',
+      pink: 'http://maps.google.com/mapfiles/ms/micons/pink-dot.png',
+      yellow: 'http://maps.google.com/mapfiles/ms/micons/yellow-dot.png',
+      turqoise: 'http://maps.google.com/mapfiles/ms/micons/ltblue-dot.png',
+      orange: 'http://maps.google.com/mapfiles/ms/micons/orange-dot.png'
+    }
+
       function addMarker(lat, long) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, long),
-            // icon: '',
+            icon: icons.red,
             map: map
           });
+          markers.push(marker)
           return marker
         }
 
@@ -217,25 +231,58 @@ $(document).ready(function(){
         });
   })
 
+
+
    $('.search-form').on('submit', function(event){
+    markers.forEach(function(marker){ marker.setMap(null) });
     event.preventDefault();
     $('.loader').show()
     var data = $('.search-form').serialize();
     $.get('/journeys/search', data)
-    .done(function(response){
-      response.forEach(function(element, elementIndex1) {
-          if(element.coordinates){
-            var latitude = element.coordinates.coordinates[1];
-            var longitude = element.coordinates.coordinates[0];
-            createLocationPage(latitude, longitude, element)
-          }else if(element.place){
-            var latitude = element.place.bounding_box.coordinates[0][1][1];
-            var longitude = element.place.bounding_box.coordinates[0][1][0];
-            createLocationPage(latitude, longitude, element)}
-       });
+      .done(function(response){
+        response.forEach(function(element, elementIndex1) {
+            if(element.coordinates){
+              var latitude = element.coordinates.coordinates[1];
+              var longitude = element.coordinates.coordinates[0];
+              createLocationPage(latitude, longitude, element)
+            }else if(element.place){
+              var latitude = element.place.bounding_box.coordinates[0][1][1];
+              var longitude = element.place.bounding_box.coordinates[0][1][0];
+              createLocationPage(latitude, longitude, element)
+            }
+        });
       $('.loader').hide();
     })
   })
+
+    $('body').on('click', '.journeylink', function(e){
+    markers.forEach(function(marker){ marker.setMap(null) });
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+      $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
+      var results = $('.results-data').data('results')
+      results.forEach(function(element){
+        $(".journey-tweet-list").append("<li>"+element.text+"</li>");
+        if(element.coordinates){
+          var latitude = element.coordinates.coordinates[1];
+          var longitude = element.coordinates.coordinates[0];
+          createLocationPage(latitude, longitude, element)
+        }else if(element.place){
+          var latitude = element.place.bounding_box.coordinates[0][1][1];
+          var longitude = element.place.bounding_box.coordinates[0][1][0];
+          createLocationPage(latitude, longitude, element)
+        }
+      })
+    })
+  })
+
 })
 
 
@@ -297,6 +344,33 @@ $(document).ready(function(){
       $('#slideout').html(response);
     })
   })
+
+  $('body').on('click', '.journeylink', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
+  $('body').on('click', '.adventure', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
 
   // Click Notices, slide out Journey index
   $('#invitations-nav').on('click', function(e){

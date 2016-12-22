@@ -547,6 +547,8 @@ a.invitations {
     bottom: 0;
     left: 0;
     z-index: 1;
+    display: absolute;
+    margin-bottom: 25%;
 }
 
 @keyframes spin {

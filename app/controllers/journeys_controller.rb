@@ -21,7 +21,12 @@ class JourneysController < ApplicationController
 
   def search
     search = params[:search]
-    @users = twitter_search(current_user.twitter, search)
+    @users = []
+    # @users = twitter_search(current_user.twitter, search)
+    50.times  do
+      @users << create_random_tweet
+    end
+
     if request.xhr?
       render :json => @users
     else
@@ -47,7 +52,7 @@ class JourneysController < ApplicationController
         current_user.twitter.update("@#{@guest_handle.screen_name}: @#{@invite.journey.user.nickname} has invited you for a journey! Check it out at via @goatogether ! #goatogether")
 
       end
-      if request.xhr?
+      if request.xhr? # use responders instead of xhr? method
         @upcoming_journeys = Journey.by(current_user).upcoming
         @previous_journeys = Journey.by(current_user).previous
         @errors = @journey.errors.full_messages
@@ -60,19 +65,26 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.find(params[:journey_id])
-    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+    @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
-    render :show
+    @result = @result.to_json
+
+    if request.xhr? # user responders instead of xhr? method
+      render :show, layout: false
+    end
   end
+
 
   def random
     journey_count = get_journeys_user_is_not_apart_of.count
     @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
     @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
     get_tweets_from_within_timeline(@result)
-    render :show
+    if request.xhr?
+      render :show, layout: false
+    end
   end
 
   def edit
@@ -80,6 +92,23 @@ class JourneysController < ApplicationController
   end
 
 private
+
+ def not_a_guest(journey, current_user)
+  journey.invites.each do |invite|
+    if invite.guest_id == current_user.id
+      return false
+    end
+  end
+  return true
+ end
+
+ def render_404
+  respond_to do |format|
+    format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+    format.xml  { head :not_found }
+    format.any  { head :not_found }
+    end
+  end
 
   # takes the friends param and breaks it up into individual people
   def friends
@@ -110,7 +139,7 @@ private
   end
 
 
-  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=1)
+  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=2)
     search_term = search_term.to_s
     if results.length >= pins
       results.slice!(pins..-1)
