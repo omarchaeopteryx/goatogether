@@ -145,6 +145,7 @@ $(document).ready(function(){
     dataType: "JSON"
   })
   .done(function(response){
+    $(".loader").show();
     var tweetResponse = response;
 
     function addMarker(lat, long) {
@@ -223,6 +224,7 @@ $(document).ready(function(){
             createLocationPage(latitude, longitude, element1)
           }else{
           }
+          $(".loader").hide();
         });
   })
 
