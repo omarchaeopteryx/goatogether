@@ -40,7 +40,7 @@
          <li><a class="adventure" href="/journeys/random">I'm feeling Adventurous</a></li>
        </ul>
        <ul class="menu-user">
-          <li id="user-profile"><a href="/users/<%= if current_user then current_user.id end %>"><i class="fa fa-user-circle" aria-hidden="true"></i> <%= current_user.name %></a></li>
+          <li id="user-profile"><a href="/users/<%= if current_user then current_user.id end %>"><i class="fa fa-user-circle" aria-hidden="true"></i> <%= if current_user then current_user.name end %></a></li>
           <li><a href="/sessions/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
       </ul>
     </nav>
