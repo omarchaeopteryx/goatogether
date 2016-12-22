@@ -275,10 +275,10 @@ $(document).ready(function(){
       $(".nav1").removeClass("menushow");
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
-      $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
+      $(".journey-show-name").append("<ul class='journey-tweet-list'></ul>");
       var results = JSON.parse($('.results-data').html())
       // console.log(results.typeOf())
-      window.results = results
+      // window.results = results
       results.forEach(function(element){
         $(".journey-tweet-list").append("<li>"+element.text+"</li>");
         if(element.coordinates){
