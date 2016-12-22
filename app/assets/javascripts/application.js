@@ -142,11 +142,15 @@ $(document).ready(function(){
     method: "GET",
     dataType: "JSON"
   })
+  .fail(function(response){
+    $('#login-blackout').show();
+    $('#first-login').show()
+    $('#first-login').html(response.responseText)
+  })
   .done(function(response){
     var tweetResponse = response;
 
     function addMarker(lat, long) {
-      console.log('AAAAAAAAAHHHHHHH')
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
         map: map
@@ -158,9 +162,7 @@ $(document).ready(function(){
     $(".menu-btn").click(function(event){
       event.preventDefault();
       $(".nav1").toggleClass("menushow");
-
     });
-
 
       function addMarker(lat, long) {
           var marker = new google.maps.Marker({
@@ -173,7 +175,6 @@ $(document).ready(function(){
 
     // Marker is clicked, slide out slidey
     function createLocationPage(newLat, newLong, element1){
-        console.log('Start of create pin');
         addMarker(newLat,newLong).addListener('click', function() {
           $.ajax({
             url: "/posts/show",
@@ -194,7 +195,6 @@ $(document).ready(function(){
             $('#twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
           });
       });
-        console.log('added pin')
     }
 
       //the tweet response is an array of arrays, each containing tweet object
@@ -236,7 +236,6 @@ $(document).ready(function(){
       $('.loader').hide();
     })
   })
-
 })
 
 
@@ -277,7 +276,7 @@ $(document).ready(function(){
     error: function(data){
         $('.errors').html('<p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Please enter a valid twitter user as your friend</p>');
         }
-  })
+    })
     .done(function(response){
       $('div#overlay').hide();
       $(".nav2").addClass("menushow2");
