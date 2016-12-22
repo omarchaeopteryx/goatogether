@@ -25,4 +25,5 @@ describe Invite do
   end
 
 
+
 end

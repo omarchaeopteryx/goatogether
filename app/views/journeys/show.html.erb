@@ -2,7 +2,7 @@
 <div class='journey-show'>
   <h2><%= @journey.name %></h2>
   <p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
-  <div class="results-data" data-results='<%=sanitize(@result)%>'></div>
+  <div class="results-data hidden" aria-hidden="true"><%=sanitize(@combined_results)%></div>
 
 
 </div>
