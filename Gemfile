@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.2.2'
+
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'pry'
 gem 'instagram',  :git => 'git://github.com/Instagram/instagram-ruby-gem.git'
