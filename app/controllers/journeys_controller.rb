@@ -3,6 +3,10 @@ class JourneysController < ApplicationController
     @journey = Journey.new
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
+    # @accepted_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, "true").order("created_at DESC")
+    puts "Index on the journeys controller..."
+    p @upcoming_journeys
+    p @accepted_invitations
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     if request.xhr?
       render :index, layout: false
@@ -65,7 +69,7 @@ class JourneysController < ApplicationController
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
-      p result.created_at
+      # p result.created_at
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
     render :show
