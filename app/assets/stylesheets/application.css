@@ -235,6 +235,7 @@ nav.menushow .menu-btn {
 }
 
 .logo {
+    display: flex;
     background-color: #666B6A;
     width: 400px;
     position: absolute;
@@ -249,12 +250,18 @@ nav.menushow .menu-btn {
 .logo h1{
     font-family: 'Space Mono', monospace;
     font-size: 30px;
-    margin: 10px;
+    margin: 5px;
+    align-self: center;
 }
 
 .logo a {
     text-decoration: none;
     color: white;
+}
+
+.logo img {
+    transform: scale(0.8);
+    padding-left: 15px;
 }
 
 .search {
@@ -562,3 +569,17 @@ a.invitations {
 }
 
 
+#over_map:first-child {
+    transform: scale(0.45);
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin: auto;
+    margin-bottom: 12px;
+    margin-right: 25px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: absolute;
+}
