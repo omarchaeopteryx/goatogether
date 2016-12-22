@@ -1,10 +1,9 @@
-<h2><%= @journey.name %></h2>
-<p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
-<p><%@result.each do |result|%></p>
-<%=result.text%>
-<%end%>
+<div class='journey-show'>
+  <h2><%= @journey.name %></h2>
+  <p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
+  <div class="results-data" data-results='<%=sanitize(@result)%>'></div>
 
-
+</div>
 <%
 =begin %>
 <% @posts.each do |post| %>
