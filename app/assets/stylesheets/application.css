@@ -242,7 +242,6 @@ nav.menushow .menu-btn {
     top: 0;
     z-index: 1000;
     border-radius: 0 0 0 50px;
-    padding: 5px;
     box-shadow:0 0 50px 0 rgba(0,0,0,.5);
 }
 
@@ -309,11 +308,27 @@ label {
     margin-top: 20px;
 }
 
+.begin-form {
+    background-color: #fefefe;
+    margin: 5% auto;
+    width: 60%;
+    z-index: 99999;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.begin-form h2 {
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+}
+
 .begin-form input {
     border: none;
-    border-bottom: 2px solid #BE6E46;
-    width: 400px;
-    padding: 10px;
+    border-bottom: 2px solid #EE6352;
+    width: 100%;
+    padding: 10px 20px;
     font-size: 14px;
     box-sizing: border-box;
 }
@@ -322,13 +337,47 @@ label {
     display: block;
     border: none;
     color: white;
-    background-color: #59594A;
+    background-color: #DCBF85;
+    border-bottom: 2px solid #C18C5D;
     border-radius: 10px;
-    margin-top: 40px;
     width: 400px;
     font-size: 18px;
     box-sizing: border-box;
     cursor: pointer;
+    margin: 0 auto;
+}
+
+.input-button {
+    padding: 40px 0 30px;
+}
+
+.begin-form input[type="submit"]:hover {
+    background-color: #EE6352;
+    border-bottom: 2px solid #cc2713;
+}
+
+.form-style {
+    margin: 0 auto;
+}
+
+.new_journey {
+    padding-top: 20px;
+    padding: 0 5%;
+}
+
+.form-header {
+    background: #EE6352;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px;
+    position: relative;
+}
+
+.form-header > .close {
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 10px;
 }
 
 #overlay {
@@ -342,14 +391,6 @@ label {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.begin-form {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 30px;
-    border: 1px solid #888;
-    width: 60%;
 }
 
 .close {
@@ -379,7 +420,6 @@ label {
     -o-transition: .5s ease-in;
     -ms-transition: .5s ease-in;
     transition: .5s ease-in;
-    z-index: 99;
     margin:0% 0 0 100%;
     z-index: 1001;
 }
@@ -399,6 +439,7 @@ label {
     margin:0% 0 0 60%;
     z-index: 1001;
 }
+
 .btn-slide {
     margin-right: 400px!important;
 }
@@ -413,7 +454,7 @@ label {
 }
 
 .nav2 a, .menu-btn2 a {
-  background-color: none;
+    background-color: none;
     color:#fff;
     font-size: 18px;
     font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
@@ -482,12 +523,15 @@ iframe {
     position: absolute;
     z-index: 99999;
 }
+
 #wrapper {
     position: relative;
 }
+
 #over_map {
     position: absolute; top: 70%; left: 5%; z-index: 99;
 }
+
 #over_map img {
     width: 200px; height: auto;
     opacity: .83;
@@ -553,8 +597,6 @@ a.invitations {
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid green; /* Blue */
     border-radius: 50%;
     width: 100px;
     height: 100px;
@@ -596,7 +638,6 @@ a.invitations {
 }
 
 #slideout {
-    padding: 0 30px;
     line-height: 1.5;
 }
 
@@ -605,9 +646,36 @@ a.invitations {
 }
 
 .user-card {
-    margin: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0 25px 20px;
+}
+
+.journeys-index h2, .journey-details h2 {
+    font-family: 'Space Mono', monospace;
+    background-color: #DCBF85;
+    padding: 5px 10px;
+    border-bottom: 2px solid #C18C5D;
+    color: white;
 }
 
 .twitter-nickname {
     color: #657786;
+}
+
+.journey-details {
+    background-color: white;
+}
+
+.journey-details a {
+    color: #EE6352;
+    font-size: 20px;
+    padding: 10px 20px 10px 10px;
+}
+
+.journey-details p {
+    padding: 0 10px 20px;
+    color: #8e4137;
+    font-size: 13px;
+    border-bottom: 1px solid #dac3ae;
 }
