@@ -51,11 +51,12 @@ class JourneysController < ApplicationController
         # Method for sending notification message via twitter:
         @guest_handle = current_user.twitter.user(@guest.uid.to_i)
         current_user.twitter.update("@#{@guest_handle.screen_name}: @#{@invite.journey.user.nickname} has invited you for a journey! Check it out at via @goatogether ! #goatogether")
-
       end
       if request.xhr? # use responders instead of xhr? method
         @upcoming_journeys = Journey.by(current_user).upcoming
         @previous_journeys = Journey.by(current_user).previous
+        @accepted_invitations = Invite.by(current_user).positive
+        @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
         @errors = @journey.errors.full_messages
         render :index, layout: false
       end
@@ -66,7 +67,7 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.find(params[:journey_id])
-
+    @accepted_invitations = Invite.by(current_user).positive
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
