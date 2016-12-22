@@ -276,7 +276,7 @@ $(document).ready(function(){
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
       $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
-      var results = $('.results-data').data('results')
+      var results = JSON.parse($('.results-data').html())
       // console.log(results.typeOf())
       window.results = results
       results.forEach(function(element){
