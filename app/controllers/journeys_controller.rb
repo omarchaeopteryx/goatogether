@@ -3,13 +3,11 @@ class JourneysController < ApplicationController
     @journey = Journey.new
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
-    # @accepted_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, "true").order("created_at DESC")
-    puts "Index on the journeys controller..."
-    p @upcoming_journeys
-    p @accepted_invitations
+    @accepted_invitations = Invite.by(current_user).positive
+    puts "Accepted invitaciones in the journeys controller..."
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     if request.xhr?
-      render :index, layout: false
+      render :index, layout: false`
     else
       render :'index'
     end
