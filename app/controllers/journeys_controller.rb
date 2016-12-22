@@ -78,7 +78,7 @@ class JourneysController < ApplicationController
       # binding.pry
       @combined_results = @result.concat(@guest_result)
     else
-      @combined_results = @resultw
+      @combined_results = @result
     end
 
     @combined_results.select! do |result|
