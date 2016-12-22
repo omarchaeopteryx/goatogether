@@ -73,15 +73,15 @@ class JourneysController < ApplicationController
     @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @user = current_user.twitter.user(@journey.invites.first.guest.uid.to_i).screen_name
     @guest_result = current_user.twitter.search("from:#{@user} #{@journey.hashtag}").to_a
-    byebug
-    @result = @result.concat(@guest_result)
+    # binding.pry
+    @combined_results = @result.concat(@guest_result)
 
-    p @result
+    p @combined_results
 
-    @result.select! do |result|
+    @combined_results.select! do |result|
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
-    @result = @result.to_json
+    @combined_results = @combined_results.to_json
 
     if request.xhr? # user responders instead of xhr? method
       render :show, layout: false
