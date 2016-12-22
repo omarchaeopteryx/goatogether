@@ -1,6 +1,7 @@
 <h2><%= @journey.name %></h2>
 <p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
 <p><%@result.each do |result|%></p>
+<i class="fa fa-twitter-square" aria-hidden="true"></i> <%="at #{result.created_at} you wrote:"%>
 <%=result.text%>
 <%end%>
 
@@ -9,7 +10,7 @@
 =begin %>
 <% @posts.each do |post| %>
   <% if post.provider == twitter %>
-    <p><i class="fa fa-twitter-square" aria-hidden="true"></i>
+    <p>
     <% post.content %></p>
   <% else %>
     <p><i class="fa fa-instagram" aria-hidden="true"></i>

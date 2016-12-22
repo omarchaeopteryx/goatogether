@@ -74,6 +74,7 @@ class JourneysController < ApplicationController
     end
   end
 
+
   def random
     journey_count = get_journeys_user_is_not_apart_of.count
     @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
@@ -87,6 +88,23 @@ class JourneysController < ApplicationController
   end
 
 private
+
+ def not_a_guest(journey, current_user)
+  journey.invites.each do |invite|
+    if invite.guest_id == current_user.id
+      return false
+    end
+  end
+  return true
+ end
+
+ def render_404
+  respond_to do |format|
+    format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+    format.xml  { head :not_found }
+    format.any  { head :not_found }
+    end
+  end
 
   # takes the friends param and breaks it up into individual people
   def friends
