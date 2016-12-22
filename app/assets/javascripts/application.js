@@ -113,6 +113,7 @@ function initialize() {
     marker = new google.maps.Marker({
       position: new google.maps.LatLng(locations[i][1], locations[i][2]),
       icon: '/assets/goat-pin.png',
+      zIndex: google.maps.Marker.MAX_ZINDEX + 1,
       map: map
     });
 
@@ -173,27 +174,16 @@ $(document).ready(function(){
       $(".nav1").toggleClass("menushow");
     });
 
-    icons = {
-      twitter: "https://s24.postimg.org/7ortwr045/pin.png",
-      red: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
-      blue: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
-      green: 'http://maps.google.com/mapfiles/ms/micons/green-dot.png',
-      pink: 'http://maps.google.com/mapfiles/ms/micons/pink-dot.png',
-      yellow: 'http://maps.google.com/mapfiles/ms/micons/yellow-dot.png',
-      turqoise: 'http://maps.google.com/mapfiles/ms/micons/ltblue-dot.png',
-      orange: 'http://maps.google.com/mapfiles/ms/micons/orange-dot.png'
-    }
-
-      function addMarker(lat, long) {
-          var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, long),
-            icon: icons.twitter,
-            animation: google.maps.Animation.DROP,
-            map: map
-          });
-          markers.push(marker)
-          return marker
-        }
+    function addMarker(lat, long) {
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(lat, long),
+          icon: "https://s24.postimg.org/7ortwr045/pin.png",
+          animation: google.maps.Animation.DROP,
+          map: map
+        });
+        markers.push(marker)
+        return marker
+      }
 
     // Marker is clicked, slide out slidey
     function createLocationPage(newLat, newLong, element1){
@@ -210,7 +200,7 @@ $(document).ready(function(){
 
             $("iframe").attr('src', newGoogleMapsDestinationTemplate);
             // // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
-            $('#twitter-avatar').html("<img src=" + element1.user.profile_image_url + "/>");
+            $('.twitter-avatar').html("<img src=" + element1.user.profile_image_url + "/>");
             $('#twitter-name').text(element1.user.name);
             $('#twitter-username').text("@" + element1.user.screen_name);
             $('#twitter-text').text(element1.text);
@@ -323,6 +313,7 @@ $(document).ready(function(){
 // Begin pop up modal
   $("a[href='/journeys/new']").on('click', function(e){
     e.preventDefault();
+    $(".nav2").removeClass("menushow2");
     $('div#overlay').show();
     $('.close').on('click', function(){
       $('div#overlay').hide();
