@@ -3,6 +3,7 @@
   <h2 class='invitations'>Pending Journeys</h2><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
 
   <% @pending_invitations.each do |invite| %>
+<<<<<<< HEAD
     <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
       <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></li>
       <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></a>
@@ -10,13 +11,18 @@
       <input type="hidden" name="_method" value="put"><button class='response-input' type='text' name='response' value='true'>Yes</button></input>
       <input type="hidden" name="_method" value="put"><button class="response-input" type="text" name="response" value="false">No</button></input>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %></form>
+=======
+  <h3 class='invitations'><a class='journeylink' href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
+  <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></p>
+   <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></p>
+>>>>>>> 8d7d817db2afbde276b87dc336202d9bb4646487
   <% end %>
 <% end %>
 
 <% unless @upcoming_journeys && @upcoming_journeys.empty? %>
   <h2>Upcoming Journeys</h2>
   <% @upcoming_journeys.each do |journey| %>
-  <h3><a href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
+  <h3 ><a class='journeylink' href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
   <p><%= format_time(journey.start_time) %> - <%= format_time(journey.end_time) %></p>
   <% end %>
 <% end %>
@@ -30,7 +36,7 @@
 <% if @previous_journeys %>
   <h2>Previous Journeys</h2>
   <% @previous_journeys.each do |journey| %>
-  <h3><a href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
+  <h3 ><a class='journeylink' href="/journeys/<%= journey.id %>"><%= journey.name %></a></h3>
   <p><%= format_time(journey.start_time) %> - <%= format_time(journey.end_time) %></p>
   <% end %>
 <% end %>

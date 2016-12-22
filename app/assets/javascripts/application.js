@@ -15,6 +15,8 @@
 //= require_tree .
 var newGoogleMapsDestinationTemplate;
 var currentLocation;
+var markers = [];
+var results;
 function initialize() {
   navigator.geolocation.getCurrentPosition(function(position){
   currentLocation = ['Your Current Location', position.coords.latitude, position.coords.longitude, 4]
@@ -73,7 +75,7 @@ function initialize() {
       "elementType": "labels.text.stroke",
       "stylers": [{"color": "#ABCE83"}]},
       {"featureType": "road",
-      "elementType": "labels.icon",
+      // "elementType": "labels.icon",
       "stylers": [{"visibility": "off"}]},
       {"featureType": "road.highway",
       "elementType": "geometry",
@@ -113,6 +115,8 @@ function initialize() {
       map: map
     });
 
+    $(".loader").hide();
+
     bounds.extend(marker.position);
 
     google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -135,24 +139,23 @@ function initialize() {
 
 
 $(document).ready(function(){
-
   $.ajax({
     url: '/',
     method: "GET",
     dataType: "JSON"
   })
+  .fail(function(response){
+    $('#login-blackout').show();
+    $('#first-login').show()
+    $('#first-login').html(response.responseText)
+  })
   .done(function(response){
     var tweetResponse = response;
-    var icons = {
-      parking: {
-        icon: 'http://pngimg.com/upload/bear_PNG1191.png'
-      }
-    };
 
     function addMarker(lat, long) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, long),
-        // icon: icons['parking'].icon,
+        icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
         map: map
       });
       locations.push(['Test', lat, long, 4])
@@ -162,40 +165,49 @@ $(document).ready(function(){
     $(".menu-btn").click(function(event){
       event.preventDefault();
       $(".nav1").toggleClass("menushow");
-
     });
 
+    icons = {
+      red: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
+      blue: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
+      green: 'http://maps.google.com/mapfiles/ms/micons/green-dot.png',
+      pink: 'http://maps.google.com/mapfiles/ms/micons/pink-dot.png',
+      yellow: 'http://maps.google.com/mapfiles/ms/micons/yellow-dot.png',
+      turqoise: 'http://maps.google.com/mapfiles/ms/micons/ltblue-dot.png',
+      orange: 'http://maps.google.com/mapfiles/ms/micons/orange-dot.png'
+    }
 
       function addMarker(lat, long) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, long),
-            // icon: '',
+            icon: icons.red,
             map: map
           });
+          markers.push(marker)
           return marker
         }
 
-
+    // Marker is clicked, slide out slidey
     function createLocationPage(newLat, newLong, element1){
-      console.log(element1)
-        var currentMarker = $(this);
         addMarker(newLat,newLong).addListener('click', function() {
-        // Bringing out slider from the right (might need to make into function):
+          $.ajax({
+            url: "/posts/show",
+            method: "GET"
+          })
+          .done(function(response){
+            $(".nav2").addClass("menushow2");
+            $('#slideout').html(response)
+            newGoogleMapsDestinationTemplate = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ&location="+newLat+","+newLong;
 
-        $('.nav-2-location-contents').removeClass('hide')
-        $(".nav2").addClass("menushow2");
-        $(".menu-btn2").addClass("button-slide");
-        $('.place-coordinates').append(marker.getPosition().lat() + ' ' + marker.getPosition().lng());
-        // NEW! Here is a series of steps that will make a new URL for google streetview...
-        var oldGoogleMapsDestination = $("iframe").attr('src');
-        var GOOGLE_API_KEY = "AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ"; // NEED to hide this.
-
-        newGoogleMapsDestinationTemplate = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ&location="+newLat+","+newLong;
-
-        $("iframe").attr('src', newGoogleMapsDestinationTemplate); // Replace old with the new.
-        // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
-        $('.tweet-description').text("@" + element1.user.screen_name + " says: " + element1.text)
-        $('.place-coordinates').text("\n From lat: " + newLat + "\n long: " + newLong)
+            $("iframe").attr('src', newGoogleMapsDestinationTemplate);
+            // // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
+            $('#twitter-avatar').html("<img src=" + element1.user.profile_image_url + "/>");
+            $('#twitter-name').text(element1.user.name);
+            $('#twitter-username').text("@" + element1.user.screen_name);
+            $('#twitter-text').text(element1.text);
+            $('#twitter-date').text(element1.created_at);
+            $('#twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
+          });
       });
     }
 
@@ -219,20 +231,55 @@ $(document).ready(function(){
         });
   })
 
+
+
    $('.search-form').on('submit', function(event){
+    markers.forEach(function(marker){ marker.setMap(null) });
     event.preventDefault();
+    $('.loader').show()
     var data = $('.search-form').serialize();
-    $.get('/journeys/search', data).done(function(response){
-      response.forEach(function(element, elementIndex1) {
-          if(element.coordinates){
-            var latitude = element.coordinates.coordinates[1];
-            var longitude = element.coordinates.coordinates[0];
-            createLocationPage(latitude, longitude, element)
-          }else if(element.place){
-            var latitude = element.place.bounding_box.coordinates[0][1][1];
-            var longitude = element.place.bounding_box.coordinates[0][1][0];
-            createLocationPage(latitude, longitude, element)}
-       });
+    $.get('/journeys/search', data)
+      .done(function(response){
+        response.forEach(function(element, elementIndex1) {
+            if(element.coordinates){
+              var latitude = element.coordinates.coordinates[1];
+              var longitude = element.coordinates.coordinates[0];
+              createLocationPage(latitude, longitude, element)
+            }else if(element.place){
+              var latitude = element.place.bounding_box.coordinates[0][1][1];
+              var longitude = element.place.bounding_box.coordinates[0][1][0];
+              createLocationPage(latitude, longitude, element)
+            }
+        });
+      $('.loader').hide();
+    })
+  })
+
+    $('body').on('click', '.journeylink', function(e){
+    markers.forEach(function(marker){ marker.setMap(null) });
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+      $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
+      var results = $('.results-data').data('results')
+      results.forEach(function(element){
+        $(".journey-tweet-list").append("<li>"+element.text+"</li>");
+        if(element.coordinates){
+          var latitude = element.coordinates.coordinates[1];
+          var longitude = element.coordinates.coordinates[0];
+          createLocationPage(latitude, longitude, element)
+        }else if(element.place){
+          var latitude = element.place.bounding_box.coordinates[0][1][1];
+          var longitude = element.place.bounding_box.coordinates[0][1][0];
+          createLocationPage(latitude, longitude, element)
+        }
+      })
     })
   })
 
@@ -252,7 +299,6 @@ $(document).ready(function(){
 
   $(".menu-nav li").first().css('background-color', '#5f846c');
   $(".menu-nav li").click(function(event){
-    event.preventDefault();
     $(this).siblings().css('background-color', '#719E81');
     $(this).css('background-color', '#5f846c');
   });
@@ -273,8 +319,11 @@ $(document).ready(function(){
     $.ajax({
     url: '/journeys',
     method: "POST",
-    data: $('form#new_journey').serialize()
-  })
+    data: $('form#new_journey').serialize(),
+    error: function(data){
+        $('.errors').html('<p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Please enter a valid twitter user as your friend</p>');
+        }
+    })
     .done(function(response){
       $('div#overlay').hide();
       $(".nav2").addClass("menushow2");
@@ -296,6 +345,37 @@ $(document).ready(function(){
     })
   })
 
+  $('body').on('click', '.journeylink', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
+  $('body').on('click', '.adventure', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+    .fail(function(jqXHR, status, somethingElse){
+      console.log(status)
+      window.location = '/404'
+    })
+  })
+
+
   // Click Notices, slide out Journey index
   $('#invitations-nav').on('click', function(e){
     e.preventDefault();
@@ -308,6 +388,7 @@ $(document).ready(function(){
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
     })
+
   })
 
 })

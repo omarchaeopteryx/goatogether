@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'pry'
 gem 'instagram',  :git => 'git://github.com/Instagram/instagram-ruby-gem.git'
 # gem "faraday", "~> 0.8.9" # OM: Might be needed to fix insta gem
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -20,6 +21,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'omniauth-twitter', '~> 1.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'faker'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 # gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

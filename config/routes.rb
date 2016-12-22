@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   get '/journeys/search', to:'journeys#search'
   get 'journeys/:journey_id', to: 'journeys#show'
   resources :users
-  resource :post
-  get '/inst/tags', to: 'posts#index'
+  get '/posts/show', to: 'posts#show'
   resources :locations
   resources :journeys
   resources :invites

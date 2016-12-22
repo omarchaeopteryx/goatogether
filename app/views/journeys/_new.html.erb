@@ -1,6 +1,7 @@
 <div class="begin-form">
   <span class="close">&times;</span>
   <h2>Begin</h2>
+  <div class="errors"></div>
   <%= form_for @journey do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name, placeholder: "Road Trip to Lassen National Park", required: true %>

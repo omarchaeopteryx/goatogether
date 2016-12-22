@@ -10,9 +10,10 @@ class LocationsController < ApplicationController
         format.json { render json: @allresults }
       end
     else
-      render 'users/login', layout: false
+      if request.xhr?
+        render 'users/login', layout: false
+      end
     end
-
   end
 
   def edit
