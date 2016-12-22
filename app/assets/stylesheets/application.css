@@ -568,7 +568,6 @@ a.invitations {
     font-size: 25px;
 }
 
-
 #over_map:first-child {
     transform: scale(0.45);
     width: 100px;
@@ -582,4 +581,13 @@ a.invitations {
     left: 0;
     z-index: 1;
     display: absolute;
+}
+
+#slideout {
+    padding: 0 30px;
+    line-height: 1.5;
+}
+
+#slideout h3 {
+
 }

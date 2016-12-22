@@ -2,6 +2,7 @@ class JourneysController < ApplicationController
   def index
     @journey = Journey.new
     @upcoming_journeys = Journey.by(current_user).upcoming
+    @current_journeys = Journey.by(current_user).current
     @previous_journeys = Journey.by(current_user).previous
     @accepted_invitations = Invite.by(current_user).positive
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
