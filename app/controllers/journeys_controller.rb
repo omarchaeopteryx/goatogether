@@ -68,13 +68,8 @@ class JourneysController < ApplicationController
     @journey = Journey.find(params[:journey_id])
 
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
-    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
-    @result.select! do |result|
-      # p result.created_at
-
     @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
-
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
     @result = @result.to_json
