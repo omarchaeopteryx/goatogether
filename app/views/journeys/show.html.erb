@@ -1,11 +1,11 @@
-<h2><%= @journey.name %></h2>
-<p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
-<p><%@result.each do |result|%></p>
-<i class="fa fa-twitter-square" aria-hidden="true"></i> <%="at #{result.created_at} you wrote:"%>
-<%=result.text%>
-<%end%>
+
+<div class='journey-show'>
+  <h2><%= @journey.name %></h2>
+  <p><%= format_time(@journey.start_time) %> - <%= format_time(@journey.end_time) %></p>
+  <div class="results-data" data-results='<%=sanitize(@result)%>'></div>
 
 
+</div>
 <%
 =begin %>
 <% @posts.each do |post| %>

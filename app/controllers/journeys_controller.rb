@@ -3,7 +3,8 @@ class JourneysController < ApplicationController
     @journey = Journey.new
     @upcoming_journeys = Journey.by(current_user).upcoming
     @previous_journeys = Journey.by(current_user).previous
-    @pending_invitations = Invite.where("guest_id = ?", current_user.id)
+    @accepted_invitations = Invite.by(current_user).positive
+    @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     if request.xhr?
       render :index, layout: false
     else
@@ -21,12 +22,11 @@ class JourneysController < ApplicationController
 
   def search
     search = params[:search]
-    @users = []
-    # @users = twitter_search(current_user.twitter, search)
-    50.times  do
-      @users << create_random_tweet
-    end
-
+    # @users = []
+    @users = twitter_search(current_user.twitter, search)
+    # 50.times  do
+    #   @users << create_random_tweet
+    # end
     if request.xhr?
       render :json => @users
     else
@@ -37,6 +37,7 @@ class JourneysController < ApplicationController
   def create
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
+
     if @journey.save
       friends.each do |friend|
         uid = current_user.twitter.user("#{friend}").id
@@ -50,11 +51,12 @@ class JourneysController < ApplicationController
         # Method for sending notification message via twitter:
         @guest_handle = current_user.twitter.user(@guest.uid.to_i)
         current_user.twitter.update("@#{@guest_handle.screen_name}: @#{@invite.journey.user.nickname} has invited you for a journey! Check it out at via @goatogether ! #goatogether")
-
       end
-      if request.xhr?
+      if request.xhr? # use responders instead of xhr? method
         @upcoming_journeys = Journey.by(current_user).upcoming
         @previous_journeys = Journey.by(current_user).previous
+        @accepted_invitations = Invite.by(current_user).positive
+        @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
         @errors = @journey.errors.full_messages
         render :index, layout: false
       end
@@ -65,22 +67,32 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.find(params[:journey_id])
-    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+    @accepted_invitations = Invite.by(current_user).positive
+    @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
+    @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
-    if request.xhr?
+    @result = @result.to_json
+
+    if request.xhr? # user responders instead of xhr? method
       render :show, layout: false
     end
   end
 
 
   def random
-    journey_count = get_journeys_user_is_not_apart_of.count
-    @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
-    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
-    get_tweets_from_within_timeline(@result)
-    render :show
+      journey_count = get_journeys_user_is_not_apart_of.count
+      if journey_count == 0
+        render_404
+      else
+        @journey = get_journeys_user_is_not_apart_of[rand(0..(journey_count-1))]
+        @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+        get_tweets_from_within_timeline(@result)
+        if request.xhr?
+          render :show, layout: false
+        end
+      end
   end
 
   def edit
@@ -101,6 +113,7 @@ private
  def render_404
   respond_to do |format|
     format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+    format.json { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
     format.xml  { head :not_found }
     format.any  { head :not_found }
     end
