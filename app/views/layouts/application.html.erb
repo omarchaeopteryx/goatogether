@@ -3,6 +3,7 @@
 <head>
   <title>Goatogether</title>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag %>
   <script src="https://use.fontawesome.com/f3f0aa6a92.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <link href="https://fonts.googleapis.com/css?family=Space+Mono|Open+Sans" rel="stylesheet">
@@ -13,7 +14,8 @@
   <body>
 
   <div class="logo">
-    <h1><a href="/">龴⊙,,⊙龴 goatogether</a></h1>
+    <%= image_tag("logo")%>
+    <h1><a href="/">goatogether</a></h1>
   </div>
   <div class ="search">
     <form class="search-form" action="/journeys/search" method="get">
