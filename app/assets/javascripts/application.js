@@ -19,7 +19,7 @@ var markers = [];
 var results;
 function initialize() {
   navigator.geolocation.getCurrentPosition(function(position){
-  currentLocation = ['Your Current Location', position.coords.latitude, position.coords.longitude, 4]
+  currentLocation = ['Current Location', position.coords.latitude, position.coords.longitude, 4]
   locations = [currentLocation];
 
   window.map = new google.maps.Map(document.getElementById('map'), {
@@ -169,7 +169,7 @@ $(document).ready(function(){
     });
 
     icons = {
-      twitter: '/assets/twitter-pin.png',
+      twitter: "https://s24.postimg.org/7ortwr045/pin.png",
       red: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
       blue: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
       green: 'http://maps.google.com/mapfiles/ms/micons/green-dot.png',
@@ -182,7 +182,8 @@ $(document).ready(function(){
       function addMarker(lat, long) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, long),
-            icon: icons.red,
+            icon: icons.twitter,
+            animation: google.maps.Animation.DROP,
             map: map
           });
           markers.push(marker)
