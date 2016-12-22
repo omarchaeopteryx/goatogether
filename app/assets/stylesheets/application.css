@@ -679,3 +679,7 @@ a.invitations {
     font-size: 13px;
     border-bottom: 1px solid #dac3ae;
 }
+
+.search-submit{
+    display: none;
+   }

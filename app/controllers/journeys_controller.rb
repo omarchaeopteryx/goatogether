@@ -23,8 +23,9 @@ class JourneysController < ApplicationController
 
   def search
     search = params[:search]
+    radius =  params[:rangeInput]
     # @users = []
-    @users = twitter_search(current_user.twitter, search)
+    @users = twitter_search(current_user.twitter, search, radius)
     # 50.times  do
     #   @users << create_random_tweet
     # end
@@ -71,10 +72,20 @@ class JourneysController < ApplicationController
     @accepted_invitations = Invite.by(current_user).positive
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
-    @result.select! do |result|
+
+    if @journey.invites.first.guest
+      @user = current_user.twitter.user(@journey.invites.first.guest.uid.to_i).screen_name
+      @guest_result = current_user.twitter.search("from:#{@user} #{@journey.hashtag}").to_a
+      # binding.pry
+      @combined_results = @result.concat(@guest_result)
+    else
+      @combined_results = @result
+    end
+
+    @combined_results.select! do |result|
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
-    @result = @result.to_json
+    @combined_results = @combined_results.to_json
 
     if request.xhr? # user responders instead of xhr? method
       render :show, layout: false
@@ -149,19 +160,19 @@ private
   end
 
 
-  def twitter_search(twitter_client, search_term, max_id=nil, results=[], pins=2)
+  def twitter_search(twitter_client, search_term, radius, max_id=nil, results=[], pins=2)
     search_term = search_term.to_s
     if results.length >= pins
       results.slice!(pins..-1)
       return results
     else
-
-      results2 =  current_user.twitter.search(search_term, geocode:"32,-117,100mi", max_id: max_id).take(5).to_a
+      puts "#{radius.to_i}"
+      results2 =  current_user.twitter.search(search_term, geocode:"32,-117,#{radius}mi", max_id: max_id).take(5).to_a
       results = results.concat(results2)
       max_id = results.last.id
 
       results.select!{|tweet| tweet.geo? }
-      twitter_search(twitter_client,search_term, max_id, results)
+      twitter_search(twitter_client,search_term, radius, max_id, results)
     end
   end
 

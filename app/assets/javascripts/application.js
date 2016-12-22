@@ -137,10 +137,14 @@ function initialize() {
   });
 })
 }
-
+function updateTextInput(val) {
+          document.getElementById('textInput').value=val;
+        }
 
 
 $(document).ready(function(){
+
+
   $.ajax({
     url: '/',
     method: "GET",
@@ -152,6 +156,7 @@ $(document).ready(function(){
     $('#first-login').html(response.responseText)
   })
   .done(function(response){
+    $(".loader").show();
     var tweetResponse = response;
 
     // function addMarker(lat, long) {
@@ -188,6 +193,7 @@ $(document).ready(function(){
             method: "GET"
           })
           .done(function(response){
+            console.log(element1)
             $(".nav2").addClass("menushow2");
             $('#slideout').html(response)
             newGoogleMapsDestinationTemplate = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyCOSRt1QlomEZuebiEqX7u1XEMJdfGdRNQ&location="+newLat+","+newLong;
@@ -199,6 +205,10 @@ $(document).ready(function(){
             $('#twitter-username').text("@" + element1.user.screen_name);
             $('#twitter-text').text(element1.text);
             $('#twitter-date').text(element1.created_at);
+            if(element1.entities.media[0].media_url){
+             $('.tweet-picture').html('<img src="'+element1.entities.media[0].media_url+'"></img>');
+             console.log(element1.entities.media[0].media_url)
+            }
             $('#twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
           });
       });
@@ -221,6 +231,7 @@ $(document).ready(function(){
             createLocationPage(latitude, longitude, element1)
           }else{
           }
+          $(".loader").hide();
         });
   })
 
@@ -259,8 +270,10 @@ $(document).ready(function(){
       $(".nav1").removeClass("menushow");
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
-      $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
-      var results = $('.results-data').data('results')
+      $(".journey-show-name").append("<ul class='journey-tweet-list'></ul>");
+      var results = JSON.parse($('.results-data').html())
+      // console.log(results.typeOf())
+      // window.results = results
       results.forEach(function(element){
         $(".journey-tweet-list").append("<li>"+element.text+"</li>");
         if(element.coordinates){
