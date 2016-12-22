@@ -71,12 +71,15 @@ class JourneysController < ApplicationController
     @accepted_invitations = Invite.by(current_user).positive
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
-    @user = current_user.twitter.user(@journey.invites.first.guest.uid.to_i).screen_name
-    @guest_result = current_user.twitter.search("from:#{@user} #{@journey.hashtag}").to_a
-    # binding.pry
-    @combined_results = @result.concat(@guest_result)
 
-    p @combined_results
+    if @journey.invites.first.guest
+      @user = current_user.twitter.user(@journey.invites.first.guest.uid.to_i).screen_name
+      @guest_result = current_user.twitter.search("from:#{@user} #{@journey.hashtag}").to_a
+      # binding.pry
+      @combined_results = @result.concat(@guest_result)
+    else
+      @combined_results = @result
+    end
 
     @combined_results.select! do |result|
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
