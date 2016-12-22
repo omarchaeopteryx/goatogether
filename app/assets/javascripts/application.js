@@ -317,6 +317,10 @@ $(document).ready(function(){
     $('div#overlay').show();
     $('.close').on('click', function(){
       $('div#overlay').hide();
+      $('#new_journey')[0].reset();
+    })
+    $('form#new_journey').on('submit', function(){
+      $('#new_journey')[0].reset();
     })
   })
 
