@@ -52,7 +52,7 @@ class JourneysController < ApplicationController
         current_user.twitter.update("@#{@guest_handle.screen_name}: @#{@invite.journey.user.nickname} has invited you for a journey! Check it out at via @goatogether ! #goatogether")
 
       end
-      if request.xhr?
+      if request.xhr? # use responders instead of xhr? method
         @upcoming_journeys = Journey.by(current_user).upcoming
         @previous_journeys = Journey.by(current_user).previous
         @errors = @journey.errors.full_messages
@@ -65,11 +65,13 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.find(params[:journey_id])
-    @result = current_user.twitter.search("#{@journey.user.nickname} #{@journey.hashtag}").to_a
+    @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
     @result.select! do |result|
       result.created_at >= @journey.start_time && result.created_at <= @journey.end_time
     end
-    if request.xhr?
+    @result = @result.to_json
+
+    if request.xhr? # user responders instead of xhr? method
       render :show, layout: false
     end
   end
