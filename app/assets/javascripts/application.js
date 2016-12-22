@@ -136,10 +136,14 @@ function initialize() {
   });
 })
 }
-
+function updateTextInput(val) {
+          document.getElementById('textInput').value=val;
+        }
 
 
 $(document).ready(function(){
+
+
   $.ajax({
     url: '/',
     method: "GET",
@@ -151,6 +155,7 @@ $(document).ready(function(){
     $('#first-login').html(response.responseText)
   })
   .done(function(response){
+    $(".loader").show();
     var tweetResponse = response;
 
     // function addMarker(lat, long) {
@@ -231,6 +236,7 @@ $(document).ready(function(){
             createLocationPage(latitude, longitude, element1)
           }else{
           }
+          $(".loader").hide();
         });
   })
 
@@ -271,6 +277,8 @@ $(document).ready(function(){
       $('#slideout').html(response);
       $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
       var results = $('.results-data').data('results')
+      // console.log(results.typeOf())
+      window.results = results
       results.forEach(function(element){
         $(".journey-tweet-list").append("<li>"+element.text+"</li>");
         if(element.coordinates){
