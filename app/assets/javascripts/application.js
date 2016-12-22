@@ -144,6 +144,11 @@ $(document).ready(function(){
     method: "GET",
     dataType: "JSON"
   })
+  .fail(function(response){
+    $('#login-blackout').show();
+    $('#first-login').show()
+    $('#first-login').html(response.responseText)
+  })
   .done(function(response){
     var tweetResponse = response;
 
@@ -263,7 +268,6 @@ $(document).ready(function(){
       $('#slideout').html(response);
       $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
       var results = $('.results-data').data('results')
-      console.log(results)
       results.forEach(function(element){
         $(".journey-tweet-list").append("<li>"+element.text+"</li>");
         if(element.coordinates){
@@ -319,7 +323,7 @@ $(document).ready(function(){
     error: function(data){
         $('.errors').html('<p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Please enter a valid twitter user as your friend</p>');
         }
-  })
+    })
     .done(function(response){
       $('div#overlay').hide();
       $(".nav2").addClass("menushow2");
@@ -343,7 +347,6 @@ $(document).ready(function(){
 
   $('body').on('click', '.journeylink', function(e){
     e.preventDefault();
-    console.log("click")
     $.ajax({
       url: $(this).attr('href'),
       method: "GET"
@@ -357,7 +360,6 @@ $(document).ready(function(){
 
   $('body').on('click', '.adventure', function(e){
     e.preventDefault();
-    console.log("click")
     $.ajax({
       url: $(this).attr('href'),
       method: "GET"
