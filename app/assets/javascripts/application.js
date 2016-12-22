@@ -341,6 +341,35 @@ $(document).ready(function(){
     })
   })
 
+  $('body').on('click', '.journeylink', function(e){
+    e.preventDefault();
+    console.log("click")
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
+  $('body').on('click', '.adventure', function(e){
+    e.preventDefault();
+    console.log("click")
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
+
   // Click Notices, slide out Journey index
   $('#invitations-nav').on('click', function(e){
     e.preventDefault();
