@@ -73,7 +73,7 @@ class JourneysController < ApplicationController
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
     @result = current_user.twitter.search("from:#{@journey.user.nickname} #{@journey.hashtag}").to_a
 
-    if @journey.invites.first.guest
+    if @journey.invites.first
       @user = current_user.twitter.user(@journey.invites.first.guest.uid.to_i).screen_name
       @guest_result = current_user.twitter.search("from:#{@user} #{@journey.hashtag}").to_a
       # binding.pry
