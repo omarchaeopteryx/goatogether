@@ -583,3 +583,7 @@ a.invitations {
     z-index: 1;
     display: absolute;
 }
+
+.search-submit{
+    display: none;
+   }
