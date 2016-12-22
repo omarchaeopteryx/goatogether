@@ -3,8 +3,9 @@
 <head>
   <title>Goatogether</title>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag %>
   <script src="https://use.fontawesome.com/f3f0aa6a92.js"></script>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
   <link href="https://fonts.googleapis.com/css?family=Space+Mono|Open+Sans" rel="stylesheet">
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initialize"
@@ -13,7 +14,8 @@
   <body>
 
   <div class="logo">
-    <h1><a href="/">龴⊙,,⊙龴 goatogether</a></h1>
+    <%= image_tag("logo")%>
+    <h1><a href="/">goatogether</a></h1>
   </div>
   <div class ="search">
     <form class="search-form" action="/journeys/search" method="get">
@@ -27,12 +29,12 @@
       </div>
       </ul>
       <ul class="menu-nav">
-        <% if @pending_invitations %>
+        <% unless @pending_invitations && @pending_invitations.empty? %>
           <li class='invitations'><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i><a id='invitations-nav' class='invitations' href="/journeys/">You have invitations!</a></li>
           <% end %>
          <li><a href="/">Explore</a></li>
          <li><a href="/journeys/new">Begin</a></li>
-         <li><a href="/journeys/random">I'm feeling Adventurous</a></li>
+         <li><a class="adventure" href="/journeys/random">I'm feeling Adventurous</a></li>
        </ul>
        <ul class="menu-user">
           <li id="user-profile"><a href="/users/<%= if current_user then current_user.id end %>"><i class="fa fa-user-circle" aria-hidden="true"></i> User</a></li>
@@ -53,6 +55,12 @@
   <div id="overlay">
     <%= render "journeys/new" %>
   </div>
+
+  <div id="login-blackout">
+    <div id="first-login">
+    </div>
+  </div>
+
 
 
   <article>

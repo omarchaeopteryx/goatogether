@@ -19,7 +19,7 @@ var markers = [];
 var results;
 function initialize() {
   navigator.geolocation.getCurrentPosition(function(position){
-  currentLocation = ['Your Current Location', position.coords.latitude, position.coords.longitude, 4]
+  currentLocation = ['Current Location', position.coords.latitude, position.coords.longitude, 4]
   locations = [currentLocation];
 
   window.map = new google.maps.Map(document.getElementById('map'), {
@@ -112,6 +112,7 @@ function initialize() {
   for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
       position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+      icon: '/assets/goat-pin.png',
       map: map
     });
 
@@ -144,19 +145,24 @@ $(document).ready(function(){
     method: "GET",
     dataType: "JSON"
   })
+  .fail(function(response){
+    $('#login-blackout').show();
+    $('#first-login').show()
+    $('#first-login').html(response.responseText)
+  })
   .done(function(response){
     $(".loader").show();
     var tweetResponse = response;
 
-    function addMarker(lat, long) {
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, long),
-        icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
-        map: map
-      });
-      locations.push(['Test', lat, long, 4])
-      return marker
-    }
+    // function addMarker(lat, long) {
+    //   marker = new google.maps.Marker({
+    //     position: new google.maps.LatLng(lat, long),
+    //     icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
+    //     map: map
+    //   });
+    //   locations.push(['Test', lat, long, 4])
+    //   return marker
+    // }
 
     $(".menu-btn").click(function(event){
       event.preventDefault();
@@ -164,6 +170,7 @@ $(document).ready(function(){
     });
 
     icons = {
+      twitter: "https://s24.postimg.org/7ortwr045/pin.png",
       red: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
       blue: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
       green: 'http://maps.google.com/mapfiles/ms/micons/green-dot.png',
@@ -176,7 +183,8 @@ $(document).ready(function(){
       function addMarker(lat, long) {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, long),
-            icon: icons.red,
+            icon: icons.twitter,
+            animation: google.maps.Animation.DROP,
             map: map
           });
           markers.push(marker)
@@ -265,7 +273,6 @@ $(document).ready(function(){
       $('#slideout').html(response);
       $(".journey-show").append("<ul class='journey-tweet-list'></ul>");
       var results = $('.results-data').data('results')
-      console.log(results)
       results.forEach(function(element){
         $(".journey-tweet-list").append("<li>"+element.text+"</li>");
         if(element.coordinates){
@@ -321,7 +328,7 @@ $(document).ready(function(){
     error: function(data){
         $('.errors').html('<p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Please enter a valid twitter user as your friend</p>');
         }
-  })
+    })
     .done(function(response){
       $('div#overlay').hide();
       $(".nav2").addClass("menushow2");
@@ -343,6 +350,37 @@ $(document).ready(function(){
     })
   })
 
+  $('body').on('click', '.journeylink', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+  })
+
+  $('body').on('click', '.adventure', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: "GET"
+    })
+    .done(function(response){
+      $(".nav1").removeClass("menushow");
+      $(".nav2").addClass("menushow2");
+      $('#slideout').html(response);
+    })
+    .fail(function(jqXHR, status, somethingElse){
+      console.log(status)
+      window.location = '/404'
+    })
+  })
+
+
   // Click Notices, slide out Journey index
   $('#invitations-nav').on('click', function(e){
     e.preventDefault();
@@ -355,6 +393,7 @@ $(document).ready(function(){
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
     })
+
   })
 
 })

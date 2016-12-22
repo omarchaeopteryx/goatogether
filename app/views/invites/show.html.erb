@@ -1,0 +1,5 @@
+<h2><%= @invite.journey.name %></h2>
+<p><%= format_time(@invite.journey.start_time) %> - <%= format_time(@invite.journey.end_time) %></p>
+<p>Hosted by: @<%= @invite.journey.user.nickname %></p>
+<p>Inviting: @<%= @invite.guest.nickname %>
+<h1><%= @invite.inspect %></h1>

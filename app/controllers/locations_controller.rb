@@ -4,15 +4,16 @@ class LocationsController < ApplicationController
     puts "AAAAAAAAAAAAAHHHHHHHHH==============++=++++"
     @allresults = []
     if current_user
-      @pending_invitations = Invite.where("guest_id = ?", current_user.id)
+      @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
       @allresults << twitter_search(current_user.twitter, "#coffee")
-      puts @allresults
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
       end
     else
-      render 'users/login', layout: false
+      if request.xhr?
+        render 'users/login', layout: false
+      end
     end
   end
 
