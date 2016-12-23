@@ -13,16 +13,22 @@
 
 <div class="journeys-index">
   <% unless @pending_invitations && @pending_invitations.empty? %>
-  <h2 class='invitations'>Pending Journeys</h2><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
+  <h2 class='invitations'><i class="fa fa-envelope fa-3" aria-hidden="true"></i>Pending Journeys</h2>
 
     <% @pending_invitations.each do |invite| %>
+    <div class="journey-details">
       <h3 class='invitations'><a href="/journeys/<%= invite.journey.id %>"><%= invite.journey.name %></a></h3>
-        <p class='invitations'><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></p>
-        <p class='invitations'><a href="/users/<%= invite.journey.user.id %>">Hosted by: @<%= invite.journey.user.nickname %></a>
+        <p><%= format_time(invite.journey.start_time) %> - <%= format_time(invite.journey.end_time) %></p>
+        <div class="host">
+          <span><a href="/users/<%= invite.journey.user.id %>">@<%= invite.journey.user.nickname %></a>
+          has invited you to join them on a journey!</span>
+        </div>
+
         <form class="invite-response-form" action='/invites/<%= invite.id %>' method="post">
-        <input type="hidden" name="_method" value="put"><button class='response-input' type='text' name='response' value='true'>Yes</button></input>
-        <input type="hidden" name="_method" value="put"><button class="response-input" type="text" name="response" value="false">No</button></input>
+          <span>Attend?</span><input type="hidden" name="_method" value="put"><button class='response-input' type='text' name='response' value='true'>Yes</button></input>
+          <input type="hidden" name="_method" value="put"><button class="response-input" type="text" name="response" value="false">No</button></input>
         <%= hidden_field_tag :authenticity_token, form_authenticity_token %></form>
+      </div>
     <% end %>
   <% end %>
 
@@ -43,7 +49,7 @@
     <% end %>
   <% end %>
 
-  <% if @current_journeys %>
+  <% unless @current_journeys && @current_journeys.empty? %>
     <h2>Current Journeys</h2>
     <% @current_journeys.each do |journey| %>
     <div class="journey-details">

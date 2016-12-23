@@ -317,7 +317,7 @@ $(document).ready(function(){
     $(".nav2").removeClass("menushow2");
   });
 
-
+// First nav item is selected
   $(".menu-nav li").first().css('background-color', '#5f846c');
   $(".menu-nav li").click(function(event){
     $(this).siblings().css('background-color', '#719E81');
