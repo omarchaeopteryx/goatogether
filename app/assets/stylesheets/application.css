@@ -681,6 +681,40 @@ a.invitations {
     border-bottom: 1px solid #dac3ae;
 }
 
-.search-submit{
+.search-submit {
     display: none;
-   }
+}
+
+.tweet-picture img {
+    width: 40%;
+}
+
+.tweet-picture {
+    border-radius: 5px;
+    background-color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="range"] {
+    box-shadow: none;
+}
+
+input#textInput {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    color: #EE6352;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(123, 104, 102, 0.89);
+}
+
+input#textInput::-webkit-input-placeholder {
+  color: #EE6352;
+  }
+
+.range {
+    display: flex;
+    justify-content: center;
+}
