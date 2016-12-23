@@ -13,6 +13,7 @@
 
 <div class="journeys-index">
   <% unless @pending_invitations && @pending_invitations.empty? %>
+  <% puts "i am here"%>
   <h2 class='invitations'>Pending Journeys</h2><i class="fa fa-envelope fa-3 invitations" aria-hidden="true"></i>
 
     <% @pending_invitations.each do |invite| %>
@@ -23,13 +24,6 @@
         <input type="hidden" name="_method" value="put"><button class='response-input' type='text' name='response' value='true'>Yes</button></input>
         <input type="hidden" name="_method" value="put"><button class="response-input" type="text" name="response" value="false">No</button></input>
         <%= hidden_field_tag :authenticity_token, form_authenticity_token %></form>
-    <% end %>
-  <% end %>
-
-  <% if @accepted_invitations %>
-    <% @accepted_invitations.each do |invitation| %>
-    <h3><a href="/journeys/<%= invitation.journey.id %>"><%= invitation.journey.name %></a></h3>
-    <p><%= format_time(invitation.journey.start_time) %> - <%= format_time(invitation.journey.end_time) %></p>
     <% end %>
   <% end %>
 

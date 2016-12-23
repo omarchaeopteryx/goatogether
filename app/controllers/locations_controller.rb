@@ -1,11 +1,10 @@
 class LocationsController < ApplicationController
   def index
     @journey = Journey.new
-    puts "AAAAAAAAAAAAAHHHHHHHHH==============++=++++"
     @allresults = []
     if current_user
       @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
-      @allresults << twitter_search(current_user.twitter, "#coffee")
+      # @allresults << twitter_search(current_user.twitter, "#coffee")
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
@@ -22,6 +21,10 @@ class LocationsController < ApplicationController
   end
 
   def show
+
+  end
+
+  def explore
 
   end
 
