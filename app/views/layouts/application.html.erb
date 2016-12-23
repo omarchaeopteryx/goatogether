@@ -20,8 +20,9 @@
   <div class ="search">
     <form class="search-form" action="/journeys/search" method="get">
       <input class="search-input" type="text" name="search" placeholder="search for location, user, or hashtag"><i class="fa fa-search" aria-hidden="true"></i><br>
+      <div class="range">
       <input type="range" name="rangeInput" min="25" max="250" onchange="updateTextInput(this.value);"><br>
-      <div class="range"><input id="textInput" placeholder="Search range: 112 miles" readonly></div>
+      <input id="textInput" placeholder="112 miles" readonly></div>
       <input class="search-submit" type='submit'></input>
     </form>
   </div>

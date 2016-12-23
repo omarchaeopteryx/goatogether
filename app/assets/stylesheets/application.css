@@ -23,7 +23,7 @@ body {
 }
 
 #map {
-  height: 1000px;
+  height: 100vh;
   width: 100%;
 }
 
@@ -729,22 +729,32 @@ invite-response-form {
 
 input[type="range"] {
     box-shadow: none;
+    width: 239px;
+    -webkit-appearance: none;
+    height: 10px;
+    background: #d7dcdf;
+    outline: none;
+    padding: 0;
 }
 
 input#textInput {
     background: none;
     box-shadow: none;
-    padding: 0;
-    color: #444;
     text-align: center;
     text-shadow: 1px 1px 1px rgba(123, 104, 102, 0.89);
+    padding: 3px 16px 3px 0;
+    background: #444;
+    color: white;
+    width: 96px;
 }
 
 input#textInput::-webkit-input-placeholder {
-  color: #444;
+  color: white;
 }
 
 .range {
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 15px 0;
 }
