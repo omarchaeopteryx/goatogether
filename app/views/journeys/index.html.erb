@@ -32,16 +32,6 @@
     <% end %>
   <% end %>
 
-  <% unless @accepted_invitations && @accepted_invitations.empty? %>
-  <h2>Accepted Invitations</h2>
-    <% @accepted_invitations.each do |invitation| %>
-    <div class="journey-details">
-      <h3><a href="/journeys/<%= invitation.journey.id %>"><%= invitation.journey.name %></a></h3>
-      <p><%= format_time(invitation.journey.start_time) %> - <%= format_time(invitation.journey.end_time) %></p>
-    </div>
-    <% end %>
-  <% end %>
-
   <% unless @upcoming_journeys && @upcoming_journeys.empty? %>
   <h2>Upcoming Journeys</h2>
     <% @upcoming_journeys.each do |journey| %>

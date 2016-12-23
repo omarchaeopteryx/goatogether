@@ -417,4 +417,31 @@ $(document).ready(function(){
 
   })
 
+   $('body').on('click', '.response-input', function(e){
+      e.preventDefault();
+      var formData = $(this).parent().serialize();
+      var current = $(this);
+      var button = $(e.target);
+      var formDataResult = formData + '&'
+      + encodeURI(button.attr('name'))
+      + '='
+      + encodeURI(button.attr('value'));
+
+      console.log(formDataResult)
+      $.ajax({
+        url: $(this).parent().attr('action'),
+        method:"PUT",
+        data: formDataResult
+      })
+      .done(function(response){
+
+        console.log(response)
+        current.hide()
+        $(".nav1").removeClass("menushow");
+        $(".nav2").addClass("menushow2");
+        $('#slideout').html(response);
+
+      })
+   })
+
 })
