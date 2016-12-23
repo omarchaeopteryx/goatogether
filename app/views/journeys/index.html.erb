@@ -33,9 +33,12 @@
   <% end %>
 
   <% if @accepted_invitations %>
+  <h2>Accepted Invitations</h2>
     <% @accepted_invitations.each do |invitation| %>
-    <h3><a href="/journeys/<%= invitation.journey.id %>"><%= invitation.journey.name %></a></h3>
-    <p><%= format_time(invitation.journey.start_time) %> - <%= format_time(invitation.journey.end_time) %></p>
+    <div class="journey-details">
+      <h3><a href="/journeys/<%= invitation.journey.id %>"><%= invitation.journey.name %></a></h3>
+      <p><%= format_time(invitation.journey.start_time) %> - <%= format_time(invitation.journey.end_time) %></p>
+    </div>
     <% end %>
   <% end %>
 
