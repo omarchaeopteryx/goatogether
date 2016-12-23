@@ -159,16 +159,6 @@ $(document).ready(function(){
     $(".loader").show();
     var tweetResponse = response;
 
-    // function addMarker(lat, long) {
-    //   marker = new google.maps.Marker({
-    //     position: new google.maps.LatLng(lat, long),
-    //     icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png',
-    //     map: map
-    //   });
-    //   locations.push(['Test', lat, long, 4])
-    //   return marker
-    // }
-
     $(".menu-btn").click(function(event){
       event.preventDefault();
       $(".nav1").toggleClass("menushow");
@@ -274,7 +264,7 @@ $(document).ready(function(){
         function imageMaker(element){
           if(element.entities.media){
           return "<img src='" + element.entities.media[0].media_url + "'></img>"
-          }
+          } else { return ""}
         };
         $('.all-tweets').append(`
           <div class="tweet-details">

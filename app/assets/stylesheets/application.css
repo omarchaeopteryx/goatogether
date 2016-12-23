@@ -681,6 +681,17 @@ a.invitations {
     border-bottom: 1px solid #dac3ae;
 }
 
-.search-submit{
+.search-submit {
     display: none;
-   }
+}
+
+.tweet-picture img {
+    width: 40%;
+}
+
+.tweet-picture {
+    background-color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
