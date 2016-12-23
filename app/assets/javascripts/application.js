@@ -201,15 +201,14 @@ $(document).ready(function(){
             $("iframe").attr('src', newGoogleMapsDestinationTemplate);
             // // Adding screen_name, text, lat, long to sidebar. Choose either plaintext or HTML (see below):
             $('.twitter-avatar').html("<img src=" + element1.user.profile_image_url + "/>");
-            $('#twitter-name').text(element1.user.name);
-            $('#twitter-username').text("@" + element1.user.screen_name);
-            $('#twitter-text').text(element1.text);
-            $('#twitter-date').text(element1.created_at);
+            $('.twitter-name').text(element1.user.name);
+            $('.twitter-username').text("@" + element1.user.screen_name);
+            $('.twitter-text').text(element1.text);
+            $('.twitter-date').text(element1.created_at);
             if(element1.entities.media[0].media_url){
              $('.tweet-picture').html('<img src="'+element1.entities.media[0].media_url+'"></img>');
-             console.log(element1.entities.media[0].media_url)
             }
-            $('#twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
+            $('.twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
           });
       });
     }
@@ -270,12 +269,16 @@ $(document).ready(function(){
       $(".nav1").removeClass("menushow");
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
-      $(".journey-show-name").append("<ul class='journey-tweet-list'></ul>");
       var results = JSON.parse($('.results-data').html())
-      // console.log(results.typeOf())
-      // window.results = results
       results.forEach(function(element){
-        $(".journey-tweet-list").append("<li>"+element.text+"</li>");
+        $('.twitter-avatar').html("<img src=" + element.user.profile_image_url + "/>");
+        $('.twitter-name').text(element.user.name);
+        $('.twitter-username').text("@" + element.user.screen_name);
+        $('.twitter-text').text(element.text);
+        $('.twitter-date').text(element.created_at);
+        if(element.entities.media[0].media_url){
+         $('.tweet-picture').html('<img src="'+element.entities.media[0].media_url+'"></img>');
+        }
         if(element.coordinates){
           var latitude = element.coordinates.coordinates[1];
           var longitude = element.coordinates.coordinates[0];
@@ -317,6 +320,10 @@ $(document).ready(function(){
     $('div#overlay').show();
     $('.close').on('click', function(){
       $('div#overlay').hide();
+      $('#new_journey')[0].reset();
+    })
+    $('form#new_journey').on('submit', function(){
+      $('#new_journey')[0].reset();
     })
   })
 
