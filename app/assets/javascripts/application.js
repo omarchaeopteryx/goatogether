@@ -138,9 +138,8 @@ function initialize() {
 })
 }
 function updateTextInput(val) {
-          document.getElementById('textInput').value=val;
+          document.getElementById('textInput').value=val + ' miles';
         }
-
 
 $(document).ready(function(){
 
@@ -224,8 +223,6 @@ $(document).ready(function(){
         });
   })
 
-
-
    $('.search-form').on('submit', function(event){
     markers.forEach(function(marker){ marker.setMap(null) });
     event.preventDefault();
@@ -266,31 +263,31 @@ $(document).ready(function(){
           return "<img src='" + element.entities.media[0].media_url + "'></img>"
           } else { return ""}
         };
-        $('.all-tweets').append(`
-          <div class="tweet-details">
-            <div class='tweet-user'>
-              <div class="tweet-user-left">
-                <div class="twitter-avatar"><img src=` + element.user.profile_image_url + `/></div>
-                <div class="tweet-name-username">
-                  <div class="twitter-name">`+ element.user.name +`</div>
-                  <div class="twitter-username">@` + element.user.screen_name +`</div>
-                </div>
-              </div>
-              <div class="tweet-user-right">
-                <span class="twitter-icon">
-                  <a href="https://twitter.com/` + element.user.screen_name +
-                  `"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
-              </div>
-            </div>
-            <div class='tweet-content'>
-              <div class='tweet-picture'>` + imageMaker(element) +
-              `</div>
-              <div class="twitter-text">` + element.text + `</div>
-              <div class="twitter-date">`+ element.created_at +`</div>
-            </div>
-            </div>
-          </div>
-          `);
+        $('.all-tweets').append(
+          "<div class='tweet-details'>"+
+            "<div class='tweet-user'>"+
+              "<div class='tweet-user-left'>"+
+                "<div class='twitter-avatar'><img src=" + element.user.profile_image_url + "/></div>"+
+                "<div class='tweet-name-username'>"+
+                  "<div class='twitter-name'>"+ element.user.name +"</div>"+
+                  "<div class='twitter-username'>@" + element.user.screen_name +"</div>"+
+                "</div>"+
+              "</div>"+
+              "<div class='tweet-user-right'>"+
+                "<span class='twitter-icon'>"+
+                  "<a href='https://twitter.com/'" + element.user.screen_name +
+                  "><i class='fa fa-twitter' aria-hidden='true'></i></a></span>"+
+              "</div>"+
+            "</div>"+
+            "<div class='tweet-content'>"+
+              "<div class='tweet-picture'>" + imageMaker(element) +
+              "</div>"+
+              "<div class='twitter-text'>"+ element.text + "</div>"+
+              "<div class='twitter-date'>"+ element.created_at +"</div>"+
+            "</div>"+
+            "</div>"+
+          "</div>"
+          );
         // if(element.entities.media){
         //  $('.tweet-picture').append('<img src="'+element.entities.media[0].media_url+'"></img>');
         // }

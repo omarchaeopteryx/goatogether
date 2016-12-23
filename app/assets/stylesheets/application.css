@@ -695,3 +695,25 @@ a.invitations {
     justify-content: center;
     align-items: center;
 }
+
+input[type="range"] {
+    box-shadow: none;
+}
+
+input#textInput {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    color: #EE6352;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(123, 104, 102, 0.89);
+}
+
+input#textInput::-webkit-input-placeholder {
+  color: #EE6352;
+  }
+
+.range {
+    display: flex;
+    justify-content: center;
+}
