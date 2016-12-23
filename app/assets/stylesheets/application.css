@@ -729,8 +729,12 @@ invite-response-form {
 
 input[type="range"] {
     box-shadow: none;
-    width: 217px;
-    margin: 10px 0;
+    width: 239px;
+    -webkit-appearance: none;
+    height: 10px;
+    background: #d7dcdf;
+    outline: none;
+    padding: 0;
 }
 
 input#textInput {
@@ -751,4 +755,6 @@ input#textInput::-webkit-input-placeholder {
 .range {
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 15px 0;
 }
