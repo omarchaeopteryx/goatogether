@@ -44,9 +44,9 @@ class JourneysController < ApplicationController
       friends.each do |friend|
         uid = current_user.twitter.user("#{friend}").id
         @guest = User.find_or_initialize_by(uid: uid)
-        @guest.provider = "twitter"
-        @guest.name = "guest"
-        @guest.nickname = 'guest'
+        @guest.provider ||= "twitter"
+        @guest.name ||= "guest"
+        @guest.nickname ||= 'guest'
         @guest.save
         @invite = Invite.create(journey_id: @journey.id, guest_id: @guest.id)
 
