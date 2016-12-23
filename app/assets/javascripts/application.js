@@ -195,7 +195,7 @@ $(document).ready(function(){
             $('.twitter-username').text("@" + element1.user.screen_name);
             $('.twitter-text').text(element1.text);
             $('.twitter-date').text(element1.created_at);
-            if(element1.entities.media[0].media_url){
+            if(element1.entities.media){
              $('.tweet-picture').html('<img src="'+element1.entities.media[0].media_url+'"></img>');
             }
             $('.twitter-icon').html('<a href="https://twitter.com/' + element1.user.screen_name + '"><i class="fa fa-twitter" aria-hidden="true"></i></a>')
