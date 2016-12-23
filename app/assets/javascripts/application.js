@@ -270,15 +270,40 @@ $(document).ready(function(){
       $(".nav2").addClass("menushow2");
       $('#slideout').html(response);
       var results = JSON.parse($('.results-data').html())
-      results.forEach(function(element){
-        $('.twitter-avatar').html("<img src=" + element.user.profile_image_url + "/>");
-        $('.twitter-name').text(element.user.name);
-        $('.twitter-username').text("@" + element.user.screen_name);
-        $('.twitter-text').text(element.text);
-        $('.twitter-date').text(element.created_at);
-        if(element.entities.media[0].media_url){
-         $('.tweet-picture').html('<img src="'+element.entities.media[0].media_url+'"></img>');
-        }
+      results.forEach(function(element, elementIndex){
+        function imageMaker(element){
+          if(element.entities.media){
+          return "<img src='" + element.entities.media[0].media_url + "'></img>"
+          }
+        };
+        $('.all-tweets').append(`
+          <div class="tweet-details">
+            <div class='tweet-user'>
+              <div class="tweet-user-left">
+                <div class="twitter-avatar"><img src=` + element.user.profile_image_url + `/></div>
+                <div class="tweet-name-username">
+                  <div class="twitter-name">`+ element.user.name +`</div>
+                  <div class="twitter-username">@` + element.user.screen_name +`</div>
+                </div>
+              </div>
+              <div class="tweet-user-right">
+                <span class="twitter-icon">
+                  <a href="https://twitter.com/` + element.user.screen_name +
+                  `"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+              </div>
+            </div>
+            <div class='tweet-content'>
+              <div class='tweet-picture'>` + imageMaker(element) +
+              `</div>
+              <div class="twitter-text">` + element.text + `</div>
+              <div class="twitter-date">`+ element.created_at +`</div>
+            </div>
+            </div>
+          </div>
+          `);
+        // if(element.entities.media){
+        //  $('.tweet-picture').append('<img src="'+element.entities.media[0].media_url+'"></img>');
+        // }
         if(element.coordinates){
           var latitude = element.coordinates.coordinates[1];
           var longitude = element.coordinates.coordinates[0];
