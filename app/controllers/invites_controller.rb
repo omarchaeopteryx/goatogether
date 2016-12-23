@@ -35,14 +35,10 @@ class InvitesController < ApplicationController
     @invite.update_attributes(response: params[:response])
     @invite.save
     hostresult = Journey.where("user_id = ?", current_user.id).joins(:invites).where("guest_id != ?", current_user.id).to_a
-    p hostresult.count
     guestresult = Journey.where("user_id != ?", current_user.id).joins(:invites).where("guest_id = ?", current_user.id).to_a
-    p guestresult
     @all_my_journeys = hostresult + guestresult
     @upcoming_journeys = @all_my_journeys.select {|journey| journey.start_time > Time.zone.now}
-    p @upcoming_journeys
-    @current_journeys = @all_my_journeys.select {|journey| journey.start_time <= Time.zone.now && journey.end_time >= Time.zone.now}
-    p @current_journeys
+     @current_journeys = @all_my_journeys.select {|journey| journey.start_time <= Time.zone.now && journey.end_time >= Time.zone.now}
     @previous_journeys = @all_my_journeys.select {|journey| journey.end_time < Time.zone.now}
     @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
 
