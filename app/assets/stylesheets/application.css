@@ -690,6 +690,7 @@ a.invitations {
 }
 
 .tweet-picture {
+    border-radius: 5px;
     background-color: #444;
     display: flex;
     justify-content: center;
