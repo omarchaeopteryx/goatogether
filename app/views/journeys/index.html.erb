@@ -32,7 +32,7 @@
     <% end %>
   <% end %>
 
-  <% if @accepted_invitations %>
+  <% unless @accepted_invitations && @accepted_invitations.empty? %>
   <h2>Accepted Invitations</h2>
     <% @accepted_invitations.each do |invitation| %>
     <div class="journey-details">
