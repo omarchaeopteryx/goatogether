@@ -652,7 +652,7 @@ a.invitations {
     margin: 25px 0 25px 20px;
 }
 
-.journeys-index h2, .journey-details h2 {
+.journeys-index h2, .journey-details h2, .journey-show h2 {
     font-family: 'Space Mono', monospace;
     background-color: #DCBF85;
     padding: 5px 10px;
