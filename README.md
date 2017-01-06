@@ -3,6 +3,8 @@
 ## Description
 An application to explore your area and plan journeys with your friends. Goatogether provides a map-based service to organize and collect your own Twitter posts.
 
+![image](https://docs.google.com/drawings/d/1Ys0S5BN6jaZjmuAq9_ajNpflmy3z5-9UmOyO_-5T2PA/pub?w=928&amp;h=532)
+
 ## How to Use
 + Log in with your twitter account
 
@@ -10,11 +12,16 @@ An application to explore your area and plan journeys with your friends. Goatoge
 + Type a desired search (ex: #coffee, @dog_rates)
 + Use the slider to increase or decrease the radius of the search
 
+![image](https://docs.google.com/drawings/d/1yeuQwAYivPpogaDeNJ-ZfDIwaDkjcXeJ5FLcPk52KjQ/pub?w=962&amp;h=487)
+
 ### Start a new journey or record a previous journey
 + Open the menu, click Begin
 + Enter the title for the journey
 + Enter a future date or past date for your journey
 + Enter another Twitter user to include their tweets on the journey map
++ Post tweets during a journey that include geolocation tags.
+
+![image](https://docs.google.com/drawings/d/1Bojx8-3M9DOF-xQP2s5UE4zYUim-jWsdJ1nGJZjNBXg/pub?w=960&amp;h=720)
 
 ### I'm feeling Adventurous
 Reccomends a journey based on past Twitter users you've gone on journeys with.
