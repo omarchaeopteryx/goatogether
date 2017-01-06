@@ -1,27 +1,38 @@
-# final-project
-## Introducing the GoatTogether app
+# goatogether
 
-### Our development team
+## Description
+An application to explore your area and plan journeys with your friends. Goatogether provides a map-based service to organize and collect your own Twitter posts.
 
-Jack Shelley, @jackshelley
-Christine Duane, @ckduane
-Keith James, @keithrjames
-Omar Malik, @omarchaeopteryx
+## How to Use
++ Log in with your twitter account
 
-### Description of project
+### Search hashtags
++ Type a desired search (ex: #coffee, @dog_rates)
++ Use the slider to increase or decrease the radius of the search
 
-Introducing GoatTogether - an app that let's you organize your journeys as you find and explore new places.
+### Start a new journey or record a previous journey
++ Open the menu, click Begin
++ Enter the title for the journey
++ Enter a future date or past date for your journey
++ Enter another Twitter user to include their tweets on the journey map
 
-### How to install the code locally
+### I'm feeling Adventurous
+Reccomends a journey based on past Twitter users you've gone on journeys with.
 
-Please feel free to clone this repository. Web deployment coming soon.
++ Open the menu
++ Click 'I'm feeling Adventurous'
 
-### How to use the app
+## Technologies Used
+Back End: Ruby on Rails, ActiveRecord, PostgreSQL  
+Front End: jQuery, Ajax, Javascript, HTML, CSS  
+APIs: Google Maps, Twitter
+OAuth: Twitter
 
-Coming soon. But it's best to use it with friends.
+## Challenges
+The main challenge developing goatogether was running into Twitter's Rate Limits. Goatogether relies on users sharing geolocation data to map tweets onto Google Maps. Since not all tweets have location enabled, our program takes all of the searched tweets and filters out the ones without geolocation data. Calling the seach function multiple times within a short period of time, or searching a hashtag with a lot of tweets hits Twitter's rate limit.
 
-### Build notes
-
-Coming soon.
-
-***
+## Team
+Jack Shelley, @jackshelley  
+Christine Duane, @ckduane  
+Keith James, @keithrjames  
+Omar Malik, @omarchaeopteryx  
