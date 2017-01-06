@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
     @allresults = []
     if current_user
       @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
-      @allresults << twitter_search(current_user.twitter, "#goatogether")
+      # @allresults << twitter_search(current_user.twitter, "#goatogether")
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
