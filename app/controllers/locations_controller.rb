@@ -1,16 +1,10 @@
 class LocationsController < ApplicationController
   def index
-    @count = session[:count]
     @journey = Journey.new
     @allresults = []
     if current_user
-      @count += 1
-      session[:count] = @count
-      p @count
       @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
-      if @count <= 1
-        @allresults << twitter_search(current_user.twitter, "#coffee") # Default search option for first-time visit.
-      end
+      @allresults << twitter_search(current_user.twitter, "#coffee") # Check.
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
