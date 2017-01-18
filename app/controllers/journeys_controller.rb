@@ -24,8 +24,9 @@ class JourneysController < ApplicationController
   def search
     search = params[:search]
     radius =  params[:rangeInput]
-    lat = params[:lat]
-    long = params[:long]
+    @current_location = request.location
+    lat =  params[:lat] || @current_location.latitude
+    long = params[:long] || @current_location.longitude
     p "Searching in location: #{lat}, #{long}" # <-- For debugging
 
     @users = []
