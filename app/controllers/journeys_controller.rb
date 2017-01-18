@@ -30,7 +30,6 @@ class JourneysController < ApplicationController
 
     @users = []
     @users = twitter_search(current_user.twitter, search, lat, long, radius)
-    p @users.first
     if request.xhr?
       render :json => @users
     else
@@ -165,6 +164,7 @@ private
 
   def twitter_search(twitter_client, search_term, lat, long, radius, max_id=nil, results=[], pins=25)
     search_term = search_term.to_s
+
     if results.length >= pins
       results.slice!(pins..-1)
       return results

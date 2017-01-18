@@ -4,7 +4,14 @@ class LocationsController < ApplicationController
     @allresults = []
     if current_user
       @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
-      @allresults << twitter_search(current_user.twitter, "#coffee") # Check.
+      @current_location = request.location # <-- Use gem in deploy.
+      p @current_location.inspect
+      lat =  @current_location.latitude
+      long = @current_location.longitude
+      # lat = "32.99" <-- Use test for localhost environment.
+      # long = "-117.0"
+      radius = "20"
+      # @allresults << twitter_search(current_user.twitter, "#coffee", lat, long, radius) #
       respond_to do |format|
         format.html
         format.json { render json: @allresults }
@@ -34,19 +41,19 @@ class LocationsController < ApplicationController
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
- def twitter_search(twitter_client, search_term, search_location="32,-117,100mi", max_id=nil, results=[], pins=1)
+ def twitter_search(twitter_client, search_term, lat, long, radius, max_id=nil, results=[], pins=3)
     search_term = search_term.to_s
     if results.length >= pins
       results.slice!(pins..-1)
       return results
     else
 
-      results2 =  current_user.twitter.search(search_term, geocode: search_location, max_id: max_id).take(5).to_a
+      results2 =  current_user.twitter.search(search_term, geocode:"#{lat},#{long},#{radius}mi", max_id: max_id).take(5).to_a
       results = results.concat(results2)
       max_id = results.last.id
 
       results.select!{|tweet| tweet.geo? }
-      twitter_search(twitter_client, search_term, search_location, max_id, results)
+      twitter_search(twitter_client, search_term, lat, long, radius, max_id, results)
     end
   end
 
