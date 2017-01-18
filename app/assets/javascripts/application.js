@@ -227,7 +227,8 @@ $(document).ready(function(){
     markers.forEach(function(marker){ marker.setMap(null) });
     event.preventDefault();
     $('.loader').show()
-    var data = $('.search-form').serialize();
+    var data = $('.search-form').serialize() + '&lat=' + currentLocation[1] + '&long=' + currentLocation[2];
+    console.log(data);
     $.get('/journeys/search', data)
       .done(function(response){
         response.forEach(function(element, elementIndex1) {

@@ -24,11 +24,13 @@ class JourneysController < ApplicationController
   def search
     search = params[:search]
     radius =  params[:rangeInput]
-    # @users = []
-    @users = twitter_search(current_user.twitter, search, radius)
-    # 50.times  do
-    #   @users << create_random_tweet
-    # end
+    lat = params[:lat]
+    long = params[:long]
+    p "Searching in location: #{lat}, #{long}" # <-- For debugging
+
+    @users = []
+    @users = twitter_search(current_user.twitter, search, lat, long, radius)
+    p @users.first
     if request.xhr?
       render :json => @users
     else
@@ -161,19 +163,19 @@ private
   end
 
 
-  def twitter_search(twitter_client, search_term, radius, max_id=nil, results=[], pins=25)
+  def twitter_search(twitter_client, search_term, lat, long, radius, max_id=nil, results=[], pins=25)
     search_term = search_term.to_s
     if results.length >= pins
       results.slice!(pins..-1)
       return results
     else
       puts "#{radius.to_i}"
-      results2 =  current_user.twitter.search(search_term, geocode:"32,-117,#{radius}mi", max_id: max_id).take(15).to_a
+      results2 =  current_user.twitter.search(search_term, geocode:"#{lat},#{long},#{radius}mi", max_id: max_id).take(15).to_a
       results = results.concat(results2)
       max_id = results.last.id
 
       results.select!{|tweet| tweet.geo? }
-      twitter_search(twitter_client,search_term, radius, max_id, results)
+      twitter_search(twitter_client,search_term, lat, long, radius, max_id, results)
     end
   end
 
