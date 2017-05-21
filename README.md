@@ -15,12 +15,14 @@ An application to explore your area and plan journeys with your friends. Goatoge
 ![image](https://docs.google.com/drawings/d/1yeuQwAYivPpogaDeNJ-ZfDIwaDkjcXeJ5FLcPk52KjQ/pub?w=962&amp;h=487)
 
 ### Start a new journey or record a previous journey
+
 + Open the menu, click Begin
 + Enter the title for the journey
 + Enter a future date or past date for your journey
 + Enter another Twitter user to include their tweets on the journey map
 + Post tweets during a journey that include geolocation tags.
 
+![image](https://docs.google.com/drawings/d/1Af2hPgfHLCQtQ5GuWZcXqJBfKWgW3C-wt0W_sabR--o/pub?w=726&h=570)
 ![image](https://docs.google.com/drawings/d/1Bojx8-3M9DOF-xQP2s5UE4zYUim-jWsdJ1nGJZjNBXg/pub?w=960&amp;h=720)
 
 ### I'm feeling Adventurous
