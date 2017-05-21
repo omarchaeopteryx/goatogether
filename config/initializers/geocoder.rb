@@ -2,7 +2,7 @@ Geocoder.configure(
   # geocoding service (see below for supported options):
   :lookup => :nomatim,
   # IP address geocoding service (see below for supported options):
-  :ip_lookup => :free_geoip,
+  :ip_lookup => :freegeoip,
 
    # to use an API key:
   # :api_key => "...",
