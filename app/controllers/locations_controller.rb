@@ -5,7 +5,7 @@ class LocationsController < ApplicationController
     if current_user
       @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
 
-      if @current_location
+      if request.location
         @current_location = request.location # <-- Use gem in deploy.
         p @current_location.inspect
         lat =  @current_location.latitude
