@@ -10,9 +10,10 @@ class LocationsController < ApplicationController
         p @current_location.inspect
         lat =  @current_location.latitude
         long = @current_location.longitude
+      else
+        lat = "32.99" #<-- Use test for localhost environment.
+        long = "-117.0"
       end
-      # lat = "32.99" <-- Use test for localhost environment.
-      # long = "-117.0"
       radius = "20"
       # @allresults << twitter_search(current_user.twitter, "#coffee", lat, long, radius) #
       respond_to do |format|
