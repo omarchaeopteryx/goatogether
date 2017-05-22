@@ -4,10 +4,13 @@ class LocationsController < ApplicationController
     @allresults = []
     if current_user
       @pending_invitations = Invite.where("guest_id = ? AND response IS ?", current_user.id, nil).order("created_at DESC")
-      @current_location = request.location # <-- Use gem in deploy.
-      p @current_location.inspect
-      lat =  @current_location.latitude
-      long = @current_location.longitude
+
+      if @current_location
+        @current_location = request.location # <-- Use gem in deploy.
+        p @current_location.inspect
+        lat =  @current_location.latitude
+        long = @current_location.longitude
+      end
       # lat = "32.99" <-- Use test for localhost environment.
       # long = "-117.0"
       radius = "20"
